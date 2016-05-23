@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:include="layouts/head :: head"></th:block>
+    <link href="/css/dataTables.min.css" rel="stylesheet"/>
+    <link href="/css/dataTables.bootstrap.css" rel="stylesheet"/>
+
+
+</head>
+<body>
+
+<th:block th:include="layouts/main :: main"></th:block>
+
+<div id="wrapper">
+    <div id="page-wrapper">
+        <div class="container-fluid">
+
+            <h2 style="text-align: center">Talepler</h2>
+
+            <div class="col-md-12" style="margin-top: 4%">
+                <table id="reportTable" class="display cell-border" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Talep ID</th>
+                        <th>Bayi ID</th>
+                        <th>Talep Durumu</th>
+                        <th>Talep Türü</th>
+                        <th>Talep Detayı</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="demand : ${demands}">
+                        <td th:text="${demand.demandId}">0</td>
+                        <td th:text="${demand.vendorId}">54</td>
+                        <td th:switch="${demand.demandType}">
+                            <span th:case="SETUP">İlk Kurulum</span>
+                            <span th:case="WARRANTY">Garanti Kapsamında Servis</span>
+                            <span th:case="NOTWARRANTY">Garanti Dışı Servis</span>
+                        </td>
+                        <td th:switch="${demand.demandState}">
+                            <span th:case="OPEN">Açık</span>
+                            <span th:case="IN_PROGRESS">Servis Aşamasında</span>
+                            <span th:case="COMPLETED">Tamamlandı</span>
+                            <span th:case="REJECTED">Reddedildi</span>
+                            <span th:case="UNCOMPLETED">Yarım Kaldı</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/demand/details/__${demand.demandId}__}">Detay</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap.js"></script>
+<script src="/js/Chart.min.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    $(document).ready(function () {
+        var table = $('#reportTable').DataTable({
+            language: {
+                search: "Tabloda Ara: ",
+                lengthMenu: "_MENU_ Kayıt Göster",
+                zeroRecords: "Sonuç Bulunamadı",
+                emptyTable: "Veri Yok",
+                "sInfo": "  _TOTAL_ Kayıttan _START_ - _END_ Arası Kayıtlar Gösteriliyor",
+                paginate: {
+                    first: "İlk",
+                    previous: "Önceki",
+                    next: "Sonraki",
+                    last: "Son"
+                }
+            }
+        })
+
+    });
+    /*]]>*/
+
+</script>
+
+</body>
+</html>

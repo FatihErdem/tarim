@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:include="layouts/head :: head"></th:block>
+    <link href="/css/dataTables.min.css" rel="stylesheet"/>
+    <link href="/css/dataTables.bootstrap.css" rel="stylesheet"/>
+
+
+</head>
+<body>
+
+<th:block th:include="layouts/main :: main"></th:block>
+
+<div id="wrapper">
+    <div id="page-wrapper">
+        <div class="container-fluid">
+
+            <h2 style="text-align: center">Bayiler</h2>
+
+            <div class="col-md-12" style="margin-top: 4%">
+                <table id="reportTable" class="display cell-border" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Bayi ID</th>
+                        <th>Bayi Adı</th>
+                        <th>Bayi Tel</th>
+                        <th>Bayi Yetkilisi</th>
+                        <th>Bayi Kullanıcı Adı</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="vendor : ${vendors}">
+                        <td th:text="${vendor.vendorId}">0</td>
+                        <td th:text="${vendor.vendorName}">Onions</td>
+                        <td th:text="${vendor.vendorTel}"></td>
+                        <td th:text="${vendor.vendorOfficer}"></td>
+                        <td th:text="${vendor.username}"></td>
+                        <td>
+                            <a th:href="@{/vendor/edit/__${vendor.vendorId}__}">Detay</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap.js"></script>
+<script src="/js/Chart.min.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    $(document).ready(function () {
+        var table = $('#reportTable').DataTable({
+            language: {
+                search: "Tabloda Ara: ",
+                lengthMenu: "_MENU_ Kayıt Göster",
+                zeroRecords: "Sonuç Bulunamadı",
+                emptyTable: "Veri Yok",
+                "sInfo": "  _TOTAL_ Kayıttan _START_ - _END_ Arası Kayıtlar Gösteriliyor",
+                paginate: {
+                    first: "İlk",
+                    previous: "Önceki",
+                    next: "Sonraki",
+                    last: "Son"
+                }
+            }
+        })
+
+    });
+    /*]]>*/
+
+</script>
+
+</body>
+</html>
