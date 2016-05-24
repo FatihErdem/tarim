@@ -60,7 +60,7 @@
         </div>
         <!-- END LOGO -->
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+        <a href="#" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
             <span></span>
         </a>
         <!-- END RESPONSIVE MENU TOGGLER -->
@@ -89,7 +89,8 @@
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                 <li class="dropdown dropdown-user">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <i class="icon-user"></i>
                         <span class="username uppercase username-hide-on-mobile" sec:authentication="name"> </span>
                         <i class="fa fa-angle-down"></i>
                     </a>
@@ -188,7 +189,7 @@
                 <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('demands')) ? 'active open':''}" class="nav-item">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-diamond"></i>
-                        <span class="title">TALEPLER  <span id="notificationCount3" style="margin-left:5em" class="badge badge-danger"> </span></span>
+                        <span id="talepSpan" class="title">TALEPLER  <span sec:authorize="hasAuthority('VENDOR')" id="notificationCount3" style="margin-left:5em" class="badge badge-danger"> </span></span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub-menu">
@@ -281,6 +282,8 @@
 <script src="/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
 <script src="/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
 <script src="/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-<script src="/utility/js/main-ajax.js" type="text/javascript"></script>
+<th:block sec:authorize="hasAuthority('VENDOR')">
+    <script src="/utility/js/notifications.js" type="text/javascript"></script>
+</th:block>
 </body>
 </html>

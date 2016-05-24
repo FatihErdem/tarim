@@ -24,9 +24,20 @@ $(document).ready(function () {
         $.ajax({
             url: "http://localhost:8080/api/notifications",
             success: function (data) {
+                document.getElementById('notificationMenu').innerHTML = '';
                 document.getElementById("notificationCount").innerHTML = data.unreadCount;
                 document.getElementById("notificationCount2").innerHTML = data.unreadCount;
                 document.getElementById("notificationCount3").innerHTML = data.unreadCount;
+
+                // var talepCount = document.getElementById("notificationCount3");
+                //
+                // if(data.unreadCount == 0){
+                //     var talepCount = document.getElementById("notificationCount3");
+                //     talepCount.className += " hidden"
+                // }else{
+                //     talepCount.className -= " hidden"
+                //
+                // }
 
                 for (var counter = 0; counter < data.details.length; counter++) {
                     var div = document.createElement('div');
@@ -46,8 +57,13 @@ $(document).ready(function () {
                     div.innerHTML = uniqueNotification;
                     var element = div.firstChild;
                     document.getElementById('notificationMenu').appendChild(element);
+                    div.innerHTML = '';
                 }
+            },
+            complete : function () {
+                setTimeout(request, 5000)
             }
+
         });
     })();
 
