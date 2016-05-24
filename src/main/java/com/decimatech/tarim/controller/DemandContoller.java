@@ -8,6 +8,8 @@ import com.decimatech.tarim.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -33,19 +37,42 @@ public class DemandContoller {
     private VendorService vendorService;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String getDemandForm(Model model) {
-        Demand demand = new Demand();
+    public String getDemandForm(Model model, Authentication authentication) {
 
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
+        List<Demand> demands = demandService.getAllDemands(authentication);
+
+        List<Vendor> vendors = new ArrayList<>();
+        if (isVendor) {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            vendors.add(vendor);
+        } else {
+            vendors = vendorService.getAllVendors();
+        }
+        Demand demand = new Demand();
         model.addAttribute("demand", demand);
-        model.addAttribute("vendors", vendorService.getAllVendors());
+        model.addAttribute("vendors", vendors);
         return "demandForm";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String createRequest(@Valid @ModelAttribute Demand demand, BindingResult bindingResult, Model model) {
+    public String createRequest(@Valid @ModelAttribute Demand demand, BindingResult bindingResult, Model model, Authentication authentication) {
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
+        List<Demand> demands = demandService.getAllDemands(authentication);
+
+        List<Vendor> vendors = new ArrayList<>();
+        if (isVendor) {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            vendors.add(vendor);
+        } else {
+            vendors = vendorService.getAllVendors();
+        }
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("vendors", vendorService.getAllVendors());
+            model.addAttribute("vendors", vendors);
             return "demandForm";
         } else {
             demandRepository.save(demand);
