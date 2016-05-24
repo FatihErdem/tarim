@@ -40,13 +40,13 @@ public class ApiController {
 
 
             notificationDetail.setDemandId(Math.toIntExact(demands.get(i).getDemandId()));
-            notificationDetail.setCreatedAt(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date(demands.get(i).getCreationDate().getTime())));
+            notificationDetail.setCreatedAt(new SimpleDateFormat("dd/MM HH:mm").format(new Date(demands.get(i).getCreationDate().getTime())));
             notificationDetails.add(notificationDetail);
         }
 
         notification.setDetails(notificationDetails);
         notification.setUnreadCount(demands.size());
-
+        System.out.println("Girdi " + new SimpleDateFormat("dd/MM HH:mm:ss").format(new Date()));
         return notification;
 
     }
