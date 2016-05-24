@@ -12,6 +12,8 @@ public interface DemandRepository extends Repository<Demand, Long>, QueryDslPred
 
     List<Demand> findByVendorIdAndDeletedFalse(Long vendorId);
 
+    List<Demand> findByVendorIdAndDeletedFalseAndUnreadTrue(Long vendorId);
+
     Demand save(Demand demand);
 
     void delete(Demand demand);

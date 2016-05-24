@@ -43,4 +43,15 @@ public class DemandServiceImpl implements DemandService {
             return demandRepository.findByVendorIdAndDeletedFalse(vendor.getVendorId());
         }
     }
+
+    @Override
+    public List<Demand> gellAllUnreadDemands(Authentication authentication) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
+        if(isAdmin){
+            return demandRepository.findAll();
+        }else{
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            return demandRepository.findByVendorIdAndDeletedFalseAndUnreadTrue(vendor.getVendorId());
+        }    }
 }

@@ -13,7 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
 
                 // authentication
-                .antMatchers("/admins/create", "/css/**", "/js/**", "/font-awesome/**", "/fonts/**", "/images/**").permitAll()
+                .antMatchers("/admins/create", "/assets/**", "/images/**").permitAll()
                 .antMatchers("/admins/**").hasAuthority("ADMIN")
                 .antMatchers("/vendors/**").hasAuthority("ADMIN")
                 .anyRequest().fullyAuthenticated()
@@ -42,7 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe();
         /* @formatter:on */
-
 
     }
 
@@ -58,4 +59,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }

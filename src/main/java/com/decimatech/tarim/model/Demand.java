@@ -1,5 +1,7 @@
 package com.decimatech.tarim.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,30 +16,38 @@ public class Demand extends AbstractBaseModel {
     @Column(name = "vendor_id")
     private Long vendorId;
 
+    @NotBlank
     @Column(name = "customer_name")
     private String customerName;
 
+    @NotBlank
     @Column(name = "customer_surname")
     private String customerSurname;
 
+    @NotBlank
     @Column(name = "customer_tel")
     private String customerTel;
 
+    @NotBlank
     @Column(name = "customer_address")
     private String customerAddress;
 
+    @NotBlank
     @Column(name = "customer_city")
     private String customerCity;
 
+    @NotBlank
     @Column(name = "customer_district")
     private String customerDistrict;
 
     @Column(name = "demand_note")
     private String demandNote;
 
+
     @Column(name = "demand_state")
     private String demandState = "OPEN";
 
+    @NotBlank
     @Column(name = "demand_type")
     private String demandType;
 

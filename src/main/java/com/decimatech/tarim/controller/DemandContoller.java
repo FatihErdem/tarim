@@ -42,9 +42,10 @@ public class DemandContoller {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String createRequest(@Valid @ModelAttribute Demand demand, BindingResult bindingResult) {
+    public String createRequest(@Valid @ModelAttribute Demand demand, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("vendors", vendorService.getAllVendors());
             return "demandForm";
         } else {
             demandRepository.save(demand);
@@ -56,6 +57,9 @@ public class DemandContoller {
     public String getDemandList(Model model, Authentication authentication) {
 
         List<Demand> demands = demandService.getAllDemands(authentication);
+        List<Vendor> vendors = vendorService.getAllVendors();
+
+        model.addAttribute("vendors", vendors);
         model.addAttribute("demands", demands);
         return "demandList";
     }
