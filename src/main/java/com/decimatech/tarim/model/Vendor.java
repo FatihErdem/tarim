@@ -15,7 +15,7 @@ import java.util.List;
 public class Vendor extends AbstractUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "vendor_id")
     private Long vendorId;
 
