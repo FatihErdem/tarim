@@ -14,4 +14,6 @@ public interface VendorService {
     List<Vendor> getAllVendors();
 
     void registerVendor(Vendor vendor);
+
+    Vendor updateVendor(Vendor vendor);
 }

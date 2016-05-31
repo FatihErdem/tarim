@@ -1,6 +1,5 @@
 package com.decimatech.tarim;
 
-import com.decimatech.tarim.config.ThymeleafLayoutInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,11 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 @SpringBootApplication
 @EnableJpaRepositories
@@ -43,6 +38,7 @@ public class TarimApplication {
 
     @Autowired
     private HttpEncodingProperties httpEncodingProperties;
+
     @Bean
     public OrderedCharacterEncodingFilter characterEncodingFilter() {
         OrderedCharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();

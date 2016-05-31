@@ -54,4 +54,9 @@ public class DemandServiceImpl implements DemandService {
             Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
             return demandRepository.findByVendorIdAndDeletedFalseAndUnreadTrue(vendor.getVendorId());
         }    }
+
+    @Override
+    public Demand updateDemand(Demand demand) {
+        return demandRepository.save(demand);
+    }
 }

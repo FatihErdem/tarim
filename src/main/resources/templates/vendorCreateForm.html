@@ -1,0 +1,154 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="portlet box blue-chambray">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-home"></i>Bayi Ekleme Formu
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form id="vendorForm" th:action="@{/vendors/create}" th:object="${vendor}" method="post" class="horizontal-form" autocomplete="off">
+                        <div class="form-body">
+                            <h3 class="form-section">Bayi Bilgileri</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Bayi Adı</label>
+                                        <input type="text" id="vendorName" class="form-control"
+                                               th:field="*{vendorName}" th:value="*{vendorName}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorName')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorName}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Bayi Telefonu</label>
+                                        <input type="text" id="vendorTel" class="form-control" th:field="*{vendorTel}" th:value="*{vendorTel}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorTel')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorTel}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Bayi Yetkilisi</label>
+                                        <input type="text" id="vendorOfficer" class="form-control" th:field="*{vendorOfficer}" th:value="*{vendorOfficer}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorOfficer')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorOfficer}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Bayi Yetkili Telefonu</label>
+                                        <input type="text" id="vendorOfficerTel" class="form-control" th:field="*{vendorOfficerTel}" th:value="*{vendorOfficerTel}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorOfficerTel')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorOfficerTel}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+                            <h3 class="form-section">Adres Bilgileri</h3>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <div class="form-group">
+                                        <label>Adres</label>
+                                        <input type="text" id="vendorAddress" class="form-control" th:field="*{vendorAddress}" th:value="*{vendorAddress}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorAddress')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorAddress}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>İl</label>
+                                        <select th:field="${vendor.vendorCity}" class="form-control" id="city-select">
+                                            <th:block th:if="${vendor.vendorCity != null}">
+                                                <option th:value="${vendor.vendorCity}" th:text="${city.cityName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorCity')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorCity}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>İlçe</label>
+                                        <select th:field="${vendor.vendorDistrict}" class="form-control" id="district-select">
+                                            <th:block th:if="${vendor.vendorDistrict != null}">
+                                                <option th:value="${vendor.vendorDistrict}" th:text="${district.districtName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorDistrict')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorDistrict}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+                            <h3 class="form-section">Bayi Giriş Bilgileri</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Kullanıcı Adı</label>
+                                        <input type="text" id="username" class="form-control" th:field="*{username}" th:value="*{username}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger">
+                                        <p th:errors="*{username}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Kullanıcı Parolası</label>
+                                        <input type="text" id="password" class="form-control" th:field="*{password}" th:value="*{password}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger">
+                                        <p th:errors="*{password}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Bayi E-Mail Adresi</label>
+                                        <input type="text" id="vendorEmail" class="form-control" th:field="*{vendorEmail}" th:value="*{vendorEmail}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorEmail')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorEmail}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue">
+                                <i class="fa fa-check"></i> KAYDET
+                            </button>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

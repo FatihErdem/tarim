@@ -1,8 +1,10 @@
 package com.decimatech.tarim.model;
 
+import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "demand")
@@ -32,17 +34,17 @@ public class Demand extends AbstractBaseModel {
     @Column(name = "customer_address")
     private String customerAddress;
 
-    @NotBlank
+    @NotNull
     @Column(name = "customer_city")
-    private String customerCity;
+    private Long customerCity;
 
-    @NotBlank
+    @NotNull
     @Column(name = "customer_district")
-    private String customerDistrict;
+    private Long customerDistrict;
 
+    @NotNull
     @Column(name = "demand_note")
     private String demandNote;
-
 
     @Column(name = "demand_state")
     private String demandState = "OPEN";
@@ -55,7 +57,7 @@ public class Demand extends AbstractBaseModel {
     private String demandOwner;
 
     @Column(name = "unread")
-    private boolean unread = false;
+    private boolean unread = true;
 
     public enum State {
         OPEN("Açık"),
@@ -139,19 +141,19 @@ public class Demand extends AbstractBaseModel {
         this.customerAddress = customerAddress;
     }
 
-    public String getCustomerCity() {
+    public Long getCustomerCity() {
         return customerCity;
     }
 
-    public void setCustomerCity(String customerCity) {
+    public void setCustomerCity(Long customerCity) {
         this.customerCity = customerCity;
     }
 
-    public String getCustomerDistrict() {
+    public Long getCustomerDistrict() {
         return customerDistrict;
     }
 
-    public void setCustomerDistrict(String customerDistrict) {
+    public void setCustomerDistrict(Long customerDistrict) {
         this.customerDistrict = customerDistrict;
     }
 
@@ -193,5 +195,30 @@ public class Demand extends AbstractBaseModel {
 
     public void setUnread(boolean unread) {
         this.unread = unread;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Demand demand = (Demand) o;
+        return unread == demand.unread &&
+                Objects.equal(demandId, demand.demandId) &&
+                Objects.equal(vendorId, demand.vendorId) &&
+                Objects.equal(customerName, demand.customerName) &&
+                Objects.equal(customerSurname, demand.customerSurname) &&
+                Objects.equal(customerTel, demand.customerTel) &&
+                Objects.equal(customerAddress, demand.customerAddress) &&
+                Objects.equal(customerCity, demand.customerCity) &&
+                Objects.equal(customerDistrict, demand.customerDistrict) &&
+                Objects.equal(demandNote, demand.demandNote) &&
+                Objects.equal(demandState, demand.demandState) &&
+                Objects.equal(demandType, demand.demandType) &&
+                Objects.equal(demandOwner, demand.demandOwner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(demandId, vendorId, customerName, customerSurname, customerTel, customerAddress, customerCity, customerDistrict, demandNote, demandState, demandType, demandOwner, unread);
     }
 }

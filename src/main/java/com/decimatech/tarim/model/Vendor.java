@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,13 +31,13 @@ public class Vendor extends AbstractUser {
     @Column(name = "vendor_address")
     private String vendorAddress;
 
-    @NotBlank
+    @NotNull
     @Column(name = "vendor_city")
-    private String vendorCity;
+    private Long vendorCity;
 
-    @NotBlank
+    @NotNull
     @Column(name = "vendor_district")
-    private String vendorDistrict;
+    private Long vendorDistrict;
 
     @NotBlank
     @Column(name = "vendor_officer")
@@ -90,19 +91,19 @@ public class Vendor extends AbstractUser {
         this.vendorAddress = vendorAddress;
     }
 
-    public String getVendorCity() {
+    public Long getVendorCity() {
         return vendorCity;
     }
 
-    public void setVendorCity(String vendorCity) {
+    public void setVendorCity(Long vendorCity) {
         this.vendorCity = vendorCity;
     }
 
-    public String getVendorDistrict() {
+    public Long getVendorDistrict() {
         return vendorDistrict;
     }
 
-    public void setVendorDistrict(String vendorDistrict) {
+    public void setVendorDistrict(Long vendorDistrict) {
         this.vendorDistrict = vendorDistrict;
     }
 

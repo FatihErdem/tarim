@@ -1,8 +1,12 @@
 package com.decimatech.tarim.controller;
 
+import com.decimatech.tarim.model.City;
 import com.decimatech.tarim.model.Demand;
+import com.decimatech.tarim.model.District;
 import com.decimatech.tarim.model.Vendor;
+import com.decimatech.tarim.repository.CityRepository;
 import com.decimatech.tarim.repository.DemandRepository;
+import com.decimatech.tarim.repository.DistrictRepository;
 import com.decimatech.tarim.service.DemandService;
 import com.decimatech.tarim.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +40,12 @@ public class DemandContoller {
     @Autowired
     private VendorService vendorService;
 
+    @Autowired
+    private CityRepository cityRepository;
+
+    @Autowired
+    private DistrictRepository districtRepository;
+
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getDemandForm(Model model, Authentication authentication) {
 
@@ -50,10 +60,12 @@ public class DemandContoller {
         } else {
             vendors = vendorService.getAllVendors();
         }
+
+
         Demand demand = new Demand();
         model.addAttribute("demand", demand);
         model.addAttribute("vendors", vendors);
-        return "demandForm";
+        return "demandCreateForm";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -72,8 +84,13 @@ public class DemandContoller {
         }
 
         if (bindingResult.hasErrors()) {
+            City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
+            District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+
+            model.addAttribute("city", demandCity);
+            model.addAttribute("district", demandDistrict);
             model.addAttribute("vendors", vendors);
-            return "demandForm";
+            return "demandCreateForm";
         } else {
             demandRepository.save(demand);
             return "redirect:/demands";
@@ -96,11 +113,29 @@ public class DemandContoller {
     public String getDemandDetails(@PathVariable("id") Long id, Model model) {
 
         Demand demand = demandRepository.findOne(id);
+
+        City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
+        District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+
         List<Vendor> vendors = vendorService.getAllVendors();
         model.addAttribute("demand", demand);
         model.addAttribute("vendors", vendors);
-        return "demandForm";
+        model.addAttribute("city", demandCity);
+        model.addAttribute("district", demandDistrict);
+        return "demandUpdateForm";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @demandRepository.findOne(#id).vendorId")
+    @RequestMapping(value = "/details/{id}", method = RequestMethod.POST)
+    public String updateDemand(@PathVariable("id") Long id, @Valid @ModelAttribute Demand demand, BindingResult result) {
+        if (result.hasErrors()) {
+            return "demandUpdateForm";
+
+        } else {
+            demand.setDemandId(id);
+            demandService.updateDemand(demand);
+            return "redirect:/demands";
+        }
+    }
 
 }

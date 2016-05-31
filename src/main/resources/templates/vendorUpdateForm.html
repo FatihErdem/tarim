@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content">
     <div class="page-content-wrapper">
         <div class="page-content">
@@ -9,7 +10,7 @@
                 </div>
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    <form id="vendorForm" th:action="@{/vendors/create}" th:object="${vendor}" method="post" class="horizontal-form" autocomplete="off">
+                    <form id="vendorForm" th:action="@{/vendors/details/__${vendor.vendorId}__}" th:object="${vendor}" method="post" class="horizontal-form" autocomplete="off">
                         <div class="form-body">
                             <h3 class="form-section">Bayi Bilgileri</h3>
                             <div class="row">
@@ -75,7 +76,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>İl</label>
-                                        <input type="text" id="vendorCity" class="form-control" th:field="*{vendorCity}" th:value="*{vendorCity}">
+                                        <select th:field="${vendor.vendorCity}" class="form-control" id="city-select">
+                                            <th:block th:if="${vendor.vendorCity != null}">
+                                                <option th:value="${vendor.vendorCity}" th:text="${city.cityName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+                                        </select>
                                     </div>
                                     <div th:if="${#fields.hasErrors('vendorCity')}" class="alert alert-danger">
                                         <p th:errors="*{vendorCity}"></p>
@@ -85,7 +91,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>İlçe</label>
-                                        <input type="text" id="vendorDistrict" class="form-control" th:field="*{vendorDistrict}" th:value="*{vendorDistrict}">
+                                        <select th:field="${vendor.vendorDistrict}" class="form-control" id="district-select">
+                                            <th:block th:if="${vendor.vendorDistrict != null}">
+                                                <option th:value="${vendor.vendorDistrict}" th:text="${district.districtName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+                                        </select>
                                     </div>
                                     <div th:if="${#fields.hasErrors('vendorDistrict')}" class="alert alert-danger">
                                         <p th:errors="*{vendorDistrict}"></p>
@@ -109,7 +120,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Kullanıcı Parolası</label>
-                                        <input type="text" id="password" class="form-control" th:field="*{password}" th:value="*{password}">
+                                        <input type="password" id="password" class="form-control" th:field="*{password}">
                                     </div>
                                     <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger">
                                         <p th:errors="*{password}"></p>
@@ -131,7 +142,7 @@
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn blue">
-                                <i class="fa fa-check"></i> Save
+                                <i class="fa fa-check"></i> GÜNCELLE
                             </button>
                         </div>
                     </form>

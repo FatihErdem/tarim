@@ -1,15 +1,12 @@
 package com.decimatech.tarim.controller;
 
-import com.decimatech.tarim.model.Demand;
-import com.decimatech.tarim.model.Notification;
-import com.decimatech.tarim.model.NotificationDetail;
+import com.decimatech.tarim.model.*;
+import com.decimatech.tarim.repository.CityRepository;
+import com.decimatech.tarim.repository.DistrictRepository;
 import com.decimatech.tarim.service.DemandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,12 +18,17 @@ import java.util.List;
 public class ApiController {
 
     @Autowired
+    private CityRepository cityRepository;
+
+    @Autowired
     private DemandService demandService;
 
-    @RequestMapping(value = "/notifications", method = RequestMethod.GET, headers = "Accept=application/json")
-    public
+    @Autowired
+    private DistrictRepository districtRepository;
+
     @ResponseBody
-    Notification getNotification(Authentication authentication) {
+    @RequestMapping(value = "/notifications", method = RequestMethod.GET, headers = "Accept=application/json")
+    public Notification getNotification(Authentication authentication) {
 
         Notification notification = new Notification();
         List<Demand> demands = demandService.gellAllUnreadDemands(authentication);
@@ -36,7 +38,6 @@ public class ApiController {
 
         for (int i = 0; i < demands.size(); i++) {
             NotificationDetail notificationDetail = new NotificationDetail();
-
 
 
             notificationDetail.setDemandId(Math.toIntExact(demands.get(i).getDemandId()));
@@ -50,4 +51,19 @@ public class ApiController {
         return notification;
 
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/cities", method = RequestMethod.GET, headers = "Accept=application/json")
+    public List<City> getCities() {
+        List<City> cities = cityRepository.findAllByOrderByCityNameAsc();
+        return cities;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/districts/{cityId}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public List<District> getDistricts(@PathVariable("cityId") Long cityId){
+
+        return districtRepository.findByCityIdOrderByDistrictNameAsc(cityId);
+    }
+
 }

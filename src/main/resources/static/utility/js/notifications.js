@@ -61,7 +61,7 @@ $(document).ready(function () {
                 }
             },
             complete : function () {
-                setTimeout(request, 5000)
+                setTimeout(request, 15000)
             }
 
         });

@@ -1,0 +1,170 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="portlet box blue-chambray">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-home"></i>Talep Oluşturma Formu
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form id="vendorForm" th:action="@{/demands/create}" th:object="${demand}" method="post"
+                          class="horizontal-form" autocomplete="off">
+                        <div class="form-body">
+                            <h3 class="form-section">Talep Formu</h3>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Bayi Seçiniz</label>
+                                        <select th:field="${demand.vendorId}" class="form-control">
+                                            <option th:each="vendor : ${vendors}" th:value="${vendor.vendorId}"
+                                                    th:text="${vendor.toString()}"></option>
+                                        </select>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorId')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorId}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri Adı</label>
+                                        <div class="">
+                                            <input type="text" class="form-control" id="customerName"
+                                                   placeholder="Müşteri Adı"
+                                                   th:field="*{customerName}" th:value="*{customerName}"/>
+                                        </div>
+                                    </div>
+
+                                    <div th:if="${#fields.hasErrors('customerName')}" class="alert alert-danger">
+                                        <p th:errors="*{customerName}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri Soyadı</label>
+                                        <input type="text" class="form-control" id="customerSurname"
+                                               placeholder="Müşteri Soyadı"
+                                               th:field="*{customerSurname}" th:value="*{customerSurname}"/>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('customerSurname')}" class="alert alert-danger">
+                                        <p th:errors="*{customerSurname}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="form-section">Adres Bilgileri</h3>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri Adresi</label>
+                                        <div class="">
+                                            <input type="text" class="form-control" id="customerAddress"
+                                                   placeholder="Müşteri Telefonu"
+                                                   th:field="*{customerAddress}" th:value="*{customerAddress}"/>
+                                        </div>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('customerAddress')}" class="alert alert-danger">
+                                        <p th:errors="*{customerAddress}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri Telefonu</label>
+                                        <input type="text" class="form-control" id="customerTel"
+                                               placeholder="Müşteri Telefonu"
+                                               th:field="*{customerTel}" th:value="*{customerTel}"/>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('customerTel')}" class="alert alert-danger">
+                                        <p th:errors="*{customerTel}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri İl</label>
+                                        <select th:field="${demand.customerCity}" class="form-control" id="city-select">
+                                            <th:block th:if="${demand.customerCity != null}">
+                                                <option th:value="${demand.customerCity}" th:text="${city.cityName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('customerCity')}" class="alert alert-danger">
+                                        <p th:errors="*{customerCity}"></p>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri İlçe</label>
+                                        <select th:field="${demand.customerDistrict}" class="form-control" id="district-select">
+                                            <th:block th:if="${demand.customerDistrict != null}">
+                                                <option th:value="${demand.customerDistrict}" th:text="${district.districtName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+
+                                        </select>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('customerDistrict')}" class="alert alert-danger">
+                                        <p th:errors="*{customerDistrict}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <h3 class="form-section">Talep Bilgileri</h3>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Talep Notu</label>
+                                            <textarea type="text" rows="3" class="form-control" id="demandNote" placeholder="Talep Notu"
+                                                      th:field="*{demandNote}" th:value="*{demandNote}"></textarea>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('demandNote')}" class="alert alert-danger">
+                                        <p th:errors="*{demandNote}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Talep Türü</label>
+                                        <select class="form-control" th:field="${demand.demandType}"
+                                                name="type-selector">
+                                            <option th:each="type : ${T(com.decimatech.tarim.model.Demand.Type).values()}"
+                                                    th:value="${type}" th:text="${type.displayName}">
+
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue">
+                                <i class="fa fa-check"></i> TALEP EKLE</button>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

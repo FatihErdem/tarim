@@ -10,4 +10,6 @@ public interface DemandService {
     List<Demand> getAllDemands(Authentication authentication);
 
     List<Demand> gellAllUnreadDemands(Authentication authentication);
+
+    Demand updateDemand(Demand demand);
 }

@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content">
     <div class="page-content-wrapper">
         <div class="page-content">
@@ -30,7 +31,7 @@
                                 <td th:text="${vendor.vendorOfficer}"></td>
                                 <td th:text="${vendor.username}"></td>
                                 <td>
-                                    <a th:href="@{/vendors/edit/__${vendor.vendorId}__}">Detay</a>
+                                    <a th:href="@{/vendors/details/__${vendor.vendorId}__}">Detay</a>
                                 </td>
                             </tr>
                             </tbody>

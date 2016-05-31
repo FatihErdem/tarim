@@ -1,15 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content">
     <div class="page-content-wrapper">
         <div class="page-content">
             <div class="portlet box blue-chambray">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-home"></i>Talep Oluşturma Formu
+                        <i class="fa fa-home"></i>Talep Güncelleme Formu
                     </div>
                 </div>
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    <form id="vendorForm" th:action="@{/demands/create}" th:object="${demand}" method="post"
+                    <form id="vendorForm" th:action="@{/demands/details/__${demand.demandId}__}" th:object="${demand}" method="post"
                           class="horizontal-form" autocomplete="off">
                         <div class="form-body">
                             <h3 class="form-section">Talep Formu</h3>
@@ -95,9 +96,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Müşteri İl</label>
-                                        <input type="text" class="form-control" id="customerCity"
-                                               placeholder="Müşteri İl"
-                                               th:field="*{customerCity}" th:value="*{customerCity}"/>
+                                        <select th:field="${demand.customerCity}" class="form-control" id="city-select">
+                                            <th:block th:if="${demand.customerCity != null}">
+                                                <option th:value="${demand.customerCity}" th:text="${city.cityName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+                                        </select>
                                     </div>
                                     <div th:if="${#fields.hasErrors('customerCity')}" class="alert alert-danger">
                                         <p th:errors="*{customerCity}"></p>
@@ -107,9 +111,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Müşteri İlçe</label>
-                                        <input type="text" class="form-control" id="customerDistrict"
-                                               placeholder="Müşteri İlçe"
-                                               th:field="*{customerDistrict}" th:value="*{customerDistrict}"/>
+                                        <select th:field="${demand.customerDistrict}" class="form-control" id="district-select">
+                                            <th:block th:if="${demand.customerDistrict != null}">
+                                                <option th:value="${demand.customerDistrict}" th:text="${district.districtName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+
+                                        </select>
                                     </div>
                                     <div th:if="${#fields.hasErrors('customerDistrict')}" class="alert alert-danger">
                                         <p th:errors="*{customerDistrict}"></p>
@@ -126,7 +134,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Talep Notu</label>
                                             <textarea type="text" rows="3" class="form-control" id="demandNote" placeholder="Talep Notu"
-                                                   th:field="*{demandNote}" th:value="*{demandNote}"></textarea>
+                                                      th:field="*{demandNote}" th:value="*{demandNote}"></textarea>
                                     </div>
                                     <div th:if="${#fields.hasErrors('demandNote')}" class="alert alert-danger">
                                         <p th:errors="*{demandNote}"></p>
@@ -149,7 +157,8 @@
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-info">Talep Ekle</button>
+                            <button type="submit" class="btn blue">
+                                <i class="fa fa-check"></i> TALEBİ GÜNCELLE</button>
                         </div>
                     </form>
                     <!-- END FORM-->
@@ -158,3 +167,4 @@
         </div>
     </div>
 </th:block>
+</html>

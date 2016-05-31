@@ -41,4 +41,11 @@ public class VendorServiceImpl implements VendorService {
         vendorRepository.save(vendor);
     }
 
+    @Override
+    public Vendor updateVendor(Vendor vendor) {
+        final String encodedPassword = passwordEncoder.encode(vendor.getPassword());
+        vendor.setPassword(encodedPassword);
+        return vendorRepository.save(vendor);
+    }
+
 }
