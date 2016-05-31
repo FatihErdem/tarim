@@ -120,7 +120,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Kullanıcı Parolası</label>
-                                        <input type="text" id="password" class="form-control" th:field="*{password}" th:value="*{password}">
+                                        <input type="password" id="password" class="form-control" th:field="*{password}" th:value="*{password}">
                                     </div>
                                     <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger">
                                         <p th:errors="*{password}"></p>
