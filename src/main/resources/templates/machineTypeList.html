@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+
+            <div class="portlet box blue-chambray">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i> Makine Türleri
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id="sample_3_wrapper" class="dataTables_wrapper no-footer">
+                        <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="table" role="grid"
+                               aria-describedby="sample_3_info">
+                            <thead>
+                            <tr>
+                                <th>Makine Tür ID</th>
+                                <th>Makine Tür Adı</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="machineType : ${machineTypes}">
+                                <td th:text="${machineType.machineTypeId}">0</td>
+                                <td th:text="${machineType.machineTypeName}">Onions</td>
+                                <td>
+                                    <a th:href="@{/machines/types/details/__${machineType.machineTypeId}__}">Detay</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

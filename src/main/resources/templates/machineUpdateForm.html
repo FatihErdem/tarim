@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="portlet box blue-chambray">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-home"></i> Makine Güncelleme
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form id="vendorForm" th:action="@{/machines/details/__${machine.machineId}__}" th:object="${machine}" method="post" class="horizontal-form"
+                          autocomplete="off">
+                        <div class="form-body">
+                            <h3 class="form-section">Makine Türü</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Makine ID</label>
+                                        <input type="text" id="machineId" class="form-control"
+                                               th:value="*{machineId}" th:field="*{machineId}" disabled>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('machineId')}" class="alert alert-danger">
+                                        <p th:errors="*{machineId}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Makine Türü</label>
+                                        <select th:field="${machine.machineType}" class="form-control">
+                                            <option th:each="machineType : ${machineTypes}" th:value="${machineType.machineTypeId}"
+                                                    th:text="${machineType.toString()}"></option>
+                                        </select>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('machineType')}" class="alert alert-danger">
+                                        <p th:errors="*{machineType}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Makine Adı</label>
+                                        <input type="text" id="machineName" class="form-control"
+                                               th:value="*{machineName}" th:field="*{machineName}">
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('machineName')}" class="alert alert-danger">
+                                        <p th:errors="*{machineName}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/row-->
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue">
+                                <i class="fa fa-check"></i> GÜNCELLE
+                            </button>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

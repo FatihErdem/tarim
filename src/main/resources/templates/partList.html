@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+
+            <div class="portlet box blue-chambray">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i> Parçalar
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id="sample_3_wrapper" class="dataTables_wrapper no-footer">
+                        <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="table" role="grid"
+                               aria-describedby="sample_3_info">
+                            <thead>
+                            <tr>
+                                <th>Parça ID</th>
+                                <th>Ait Olduğu Makine</th>
+                                <th>Parça Adı</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="part : ${parts}">
+                                <td th:text="${part.partId}">0</td>
+                                <td th:text="${part.machineName}">Onions</td>
+                                <td th:text="${part.partName}">Onions</td>
+                                <td>
+                                    <a th:href="@{/parts/details/__${part.partId}__}">Detay</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
