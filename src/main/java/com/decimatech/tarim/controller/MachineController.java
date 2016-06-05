@@ -121,6 +121,7 @@ public class MachineController {
                     machineTable.setMachineTypeName(machineType.getMachineTypeName());
                     machineTable.setMachineId(machine.getMachineId());
                     machineTable.setMachineName(machine.getMachineName());
+                    break;
                 }
             }
             machineTables.add(machineTable);

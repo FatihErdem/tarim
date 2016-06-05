@@ -2,6 +2,7 @@ package com.decimatech.tarim.controller;
 
 import com.decimatech.tarim.model.Machine;
 import com.decimatech.tarim.model.Part;
+import com.decimatech.tarim.model.PartTable;
 import com.decimatech.tarim.repository.MachineRepository;
 import com.decimatech.tarim.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/parts")
@@ -51,8 +54,32 @@ public class PartController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String getPartList(Model model) {
+
+
+        List<Machine> machines = machineRepository.findAll();
         List<Part> parts = partRepository.findAll();
-        model.addAttribute("parts", parts);
+        List<PartTable> partTables = new ArrayList<>();
+
+        for (Part part : parts) {
+            PartTable partTable = new PartTable();
+
+            for (Machine machine : machines) {
+                if (part.getMachineId() == 0) {
+                    partTable.setMachineName("YOK");
+                    partTable.setPartId(part.getPartId());
+                    partTable.setPartName(part.getPartName());
+                    break;
+                } else if (Objects.equals(part.getMachineId(), machine.getMachineId())) {
+                    partTable.setMachineName(machine.getMachineName());
+                    partTable.setPartId(part.getPartId());
+                    partTable.setPartName(part.getPartName());
+                    break;
+                }
+            }
+            partTables.add(partTable);
+        }
+
+        model.addAttribute("parts", partTables);
 
         return "partList";
     }
@@ -75,7 +102,7 @@ public class PartController {
             List<Machine> machines = machineRepository.findAll();
             model.addAttribute("machines", machines);
             return "partUpdateForm";
-        }else {
+        } else {
             part.setPartId(id);
             partRepository.save(part);
             return "redirect:/parts";

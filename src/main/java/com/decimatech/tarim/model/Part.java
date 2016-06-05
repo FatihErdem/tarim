@@ -16,7 +16,8 @@ public class Part {
     @Column(name = "part_name")
     private String partName;
 
-    private Long machineName;
+    @Column(name = "machine_id")
+    private Long machineId;
 
     public Long getPartId() {
         return partId;
@@ -34,11 +35,11 @@ public class Part {
         this.partName = partName;
     }
 
-    public Long getMachineName() {
-        return machineName;
+    public Long getMachineId() {
+        return machineId;
     }
 
-    public void setMachineName(Long machineName) {
-        this.machineName = machineName;
+    public void setMachineId(Long machineId) {
+        this.machineId = machineId;
     }
 }
