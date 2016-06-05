@@ -185,6 +185,56 @@
                     </ul>
                 </li>
 
+                <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('machines')) ? 'active open':''}" class="nav-item " sec:authorize="hasAuthority('ADMIN')">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="icon-diamond"></i>
+                        <span class="title">MAKİNELER</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/machines/create')) ? 'active':''}" class="nav-item">
+                            <a th:href="@{/machines/create}" class="nav-link ">
+                                <span class="title">Makine Ekle</span>
+                            </a>
+                        </li>
+                        <li th:classappend="${#httpServletRequest.getRequestURI() == '/machines'  ? 'active':''}" class="nav-item  ">
+                            <a th:href="@{/machines}" class="nav-link ">
+                                <span class="title">Makineleri Listele</span>
+                            </a>
+                        </li>
+                        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/machines/types/create')) ? 'active':''}" class="nav-item">
+                            <a th:href="@{/machines/types/create}" class="nav-link ">
+                                <span class="title">Makine Türü Ekle</span>
+                            </a>
+                        </li>
+                        <li th:classappend="${#httpServletRequest.getRequestURI() == '/machines/types'  ? 'active':''}" class="nav-item  ">
+                            <a th:href="@{/machines/types}" class="nav-link ">
+                                <span class="title">Makine Türleri Listele</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('parts')) ? 'active open':''}" class="nav-item " sec:authorize="hasAuthority('ADMIN')">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="icon-diamond"></i>
+                        <span class="title">PARÇALAR</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/parts/create')) ? 'active':''}" class="nav-item">
+                            <a th:href="@{/parts/create}" class="nav-link ">
+                                <span class="title">Parça Ekle</span>
+                            </a>
+                        </li>
+                        <li th:classappend="${#httpServletRequest.getRequestURI() == '/parts'  ? 'active':''}" class="nav-item  ">
+                            <a th:href="@{/parts}" class="nav-link ">
+                                <span class="title">Parçaları Listele</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="heading">
                     <h3>TALEP YÖNETİMİ</h3>
                 </li>
