@@ -1,9 +1,6 @@
 package com.decimatech.tarim.controller;
 
-import com.decimatech.tarim.model.City;
-import com.decimatech.tarim.model.Demand;
-import com.decimatech.tarim.model.District;
-import com.decimatech.tarim.model.Vendor;
+import com.decimatech.tarim.model.*;
 import com.decimatech.tarim.repository.CityRepository;
 import com.decimatech.tarim.repository.DemandRepository;
 import com.decimatech.tarim.repository.DistrictRepository;
@@ -100,7 +97,7 @@ public class DemandContoller {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String getDemandList(Model model, Authentication authentication) {
 
-        List<Demand> demands = demandService.getAllDemands(authentication);
+        List<DemandTable> demands = demandService.getDemandTable(authentication);
         List<Vendor> vendors = vendorService.getAllVendors();
 
         model.addAttribute("vendors", vendors);

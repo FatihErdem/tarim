@@ -16,7 +16,7 @@
                             <thead>
                             <tr>
                                 <th>Talep ID</th>
-                                <th>Bayi ID</th>
+                                <th>Bayi Adı</th>
                                 <th>Talep Durumu</th>
                                 <th>Talep Türü</th>
                                 <th>Talep Detayı</th>
@@ -25,7 +25,7 @@
                             <tbody>
                             <tr th:each="demand : ${demands}">
                                 <td th:text="${demand.demandId}">0</td>
-                                <td th:text="${demand.vendorId}">54</td>
+                                <td th:text="${demand.vendorName}">54</td>
                                 <td th:switch="${demand.demandType}">
                                     <span th:case="SETUP">İlk Kurulum</span>
                                     <span th:case="WARRANTY">Garanti Kapsamında Servis</span>
