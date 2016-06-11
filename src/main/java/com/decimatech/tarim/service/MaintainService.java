@@ -11,7 +11,7 @@ public interface MaintainService {
 
     void createMaintain(Maintain maintain);
 
-    void firstCreate(Long id, Authentication authentication);
+    void firstCreate(Long demandId, Long vendorId);
 
     List<Maintain> getAll(Authentication authentication);
 

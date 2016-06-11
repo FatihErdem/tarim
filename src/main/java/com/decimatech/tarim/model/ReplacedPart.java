@@ -1,8 +1,5 @@
 package com.decimatech.tarim.model;
 
-import org.hibernate.annotations.Cache;
-
-import javax.annotation.security.DeclareRoles;
 import javax.persistence.*;
 
 @Entity

@@ -31,12 +31,11 @@ public class MaintainServiceImpl implements MaintainService {
     }
 
     @Override
-    public void firstCreate(Long id, Authentication authentication) {
-        Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+    public void firstCreate(Long demandId, Long vendorId) {
 
         Maintain maintain = new Maintain();
-        maintain.setDemandId(id);
-        maintain.setVendorId(vendor.getVendorId());
+        maintain.setDemandId(demandId);
+        maintain.setVendorId(vendorId);
         maintainRepository.save(maintain);
     }
 

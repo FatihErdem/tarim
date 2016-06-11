@@ -68,11 +68,13 @@ public class PartController {
                     partTable.setMachineName("YOK");
                     partTable.setPartId(part.getPartId());
                     partTable.setPartName(part.getPartName());
+                    partTable.setPrice(part.getPrice());
                     break;
                 } else if (Objects.equals(part.getMachineId(), machine.getMachineId())) {
                     partTable.setMachineName(machine.getMachineName());
                     partTable.setPartId(part.getPartId());
                     partTable.setPartName(part.getPartName());
+                    partTable.setPrice(part.getPrice());
                     break;
                 }
             }

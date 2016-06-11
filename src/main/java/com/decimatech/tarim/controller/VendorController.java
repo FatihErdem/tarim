@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping(value = "/vendors")
 public class VendorController {
 
@@ -65,7 +66,6 @@ public class VendorController {
         return "vendorList";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
     public String getVendorDetails(@PathVariable("id") Long id, Model model) {
 
@@ -80,7 +80,6 @@ public class VendorController {
         return "vendorUpdateForm";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST)
     public String updateVendor(@PathVariable("id") Long id, @Valid @ModelAttribute Vendor vendor, BindingResult result, Model model) {
         if (result.hasErrors()) {

@@ -158,9 +158,9 @@ public class DemandContoller {
         }
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @demandRepository.findOne(#id).vendorId")
+    @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @demandRepository.findOne(#demandId).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=openmaintain")
-    public String openMaintainFromDemand(@PathVariable("id") Long id, @Valid @ModelAttribute Demand demand, BindingResult result, Model model, Authentication authentication) {
+    public String openMaintainFromDemand(@PathVariable("id") Long demandId, @Valid @ModelAttribute Demand demand, BindingResult result, Model model, Authentication authentication) {
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
@@ -181,9 +181,10 @@ public class DemandContoller {
         model.addAttribute("city", demandCity);
         model.addAttribute("district", demandDistrict);
 
-        maintainService.firstCreate(id, authentication);
+        maintainService.firstCreate(demandId, demand.getVendorId());
+
         demand.setInProgress();
-        demand.setDemandId(id);
+        demand.setDemandId(demandId);
         demandService.updateDemand(demand);
         model.addAttribute("serviceOpened", "Servis Başarıyla Oluşturuldu. Durumunu Servisler kısmından takip edebilirsiniz.");
         return "demandInProgressForm";

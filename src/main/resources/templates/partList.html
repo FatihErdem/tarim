@@ -18,6 +18,7 @@
                                 <th>Parça ID</th>
                                 <th>Ait Olduğu Makine</th>
                                 <th>Parça Adı</th>
+                                <th>Parça Fiyatı</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -26,6 +27,7 @@
                                 <td th:text="${part.partId}">0</td>
                                 <td th:text="${part.machineName}">Onions</td>
                                 <td th:text="${part.partName}">Onions</td>
+                                <td th:text="${part.price}">Onions</td>
                                 <td>
                                     <a th:href="@{/parts/details/__${part.partId}__}">Detay</a>
                                 </td>
