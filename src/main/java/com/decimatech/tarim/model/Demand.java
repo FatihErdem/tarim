@@ -93,6 +93,10 @@ public class Demand extends AbstractBaseModel {
         }
     }
 
+    public void setInProgress(){
+        this.setDemandState("IN_PROGRESS");
+    }
+
     public Long getDemandId() {
         return demandId;
     }

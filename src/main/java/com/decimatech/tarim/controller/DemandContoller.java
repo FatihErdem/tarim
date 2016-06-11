@@ -5,6 +5,7 @@ import com.decimatech.tarim.repository.CityRepository;
 import com.decimatech.tarim.repository.DemandRepository;
 import com.decimatech.tarim.repository.DistrictRepository;
 import com.decimatech.tarim.service.DemandService;
+import com.decimatech.tarim.service.MaintainService;
 import com.decimatech.tarim.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/demands")
@@ -42,6 +44,9 @@ public class DemandContoller {
 
     @Autowired
     private DistrictRepository districtRepository;
+
+    @Autowired
+    private MaintainService maintainService;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getDemandForm(Model model, Authentication authentication) {
@@ -107,23 +112,41 @@ public class DemandContoller {
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @demandRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
-    public String getDemandDetails(@PathVariable("id") Long id, Model model) {
+    public String getDemandDetails(@PathVariable("id") Long id, Model model, Authentication authentication) {
+
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
+
+        List<Vendor> vendors = new ArrayList<>();
+        if (isVendor) {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            vendors.add(vendor);
+        } else {
+            vendors = vendorService.getAllVendors();
+        }
 
         Demand demand = demandRepository.findOne(id);
 
         City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
         District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
 
-        List<Vendor> vendors = vendorService.getAllVendors();
         model.addAttribute("demand", demand);
         model.addAttribute("vendors", vendors);
         model.addAttribute("city", demandCity);
         model.addAttribute("district", demandDistrict);
-        return "demandUpdateForm";
+
+        if (!Objects.equals(demand.getDemandState(), "OPEN")){
+            return "demandInProgressForm";
+        }else{
+            return "demandUpdateForm";
+        }
+
+
     }
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @demandRepository.findOne(#id).vendorId")
-    @RequestMapping(value = "/details/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=save")
     public String updateDemand(@PathVariable("id") Long id, @Valid @ModelAttribute Demand demand, BindingResult result) {
         if (result.hasErrors()) {
             return "demandUpdateForm";
@@ -133,6 +156,37 @@ public class DemandContoller {
             demandService.updateDemand(demand);
             return "redirect:/demands";
         }
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @demandRepository.findOne(#id).vendorId")
+    @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=openmaintain")
+    public String openMaintainFromDemand(@PathVariable("id") Long id, @Valid @ModelAttribute Demand demand, BindingResult result, Model model, Authentication authentication) {
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
+
+        List<Vendor> vendors = new ArrayList<>();
+        if (isVendor) {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            vendors.add(vendor);
+        } else {
+            vendors = vendorService.getAllVendors();
+        }
+
+
+        City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
+        District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+
+        model.addAttribute("vendors", vendors);
+        model.addAttribute("city", demandCity);
+        model.addAttribute("district", demandDistrict);
+
+        maintainService.firstCreate(id, authentication);
+        demand.setInProgress();
+        demand.setDemandId(id);
+        demandService.updateDemand(demand);
+        model.addAttribute("serviceOpened", "Servis Başarıyla Oluşturuldu. Durumunu Servisler kısmından takip edebilirsiniz.");
+        return "demandInProgressForm";
     }
 
 }

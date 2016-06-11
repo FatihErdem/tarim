@@ -19,6 +19,17 @@ public class Part {
     @Column(name = "machine_id")
     private Long machineId;
 
+    @Column(name = "price")
+    private Long price;
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
     public Long getPartId() {
         return partId;
     }

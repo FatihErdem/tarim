@@ -25,6 +25,9 @@
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <link href="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css"/>
+
+
     <link href="/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
@@ -259,6 +262,21 @@
                     </ul>
                 </li>
 
+                <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('maintains')) ? 'active open':''}" class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="icon-diamond"></i>
+                        <span id="servisSpan" class="title">SERVİSLER</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li th:classappend="${#httpServletRequest.getRequestURI() == '/maintains'  ? 'active':''}" class="nav-item  ">
+                            <a th:href="@{/maintains}" class="nav-link ">
+                                <span class="title">Servisleri Listele</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
 
             </ul>
             <!-- END SIDEBAR MENU -->
@@ -290,6 +308,7 @@
 <script src="/assets/global/plugins/moment.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
 
 <script src="/assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
@@ -344,12 +363,42 @@
     <script src="/utility/js/notifications.js" type="text/javascript"></script>
 </th:block>
 <script>
+    //    var rowCount = 0;
+    //
+    //    function addRow() {
+    //        var table = document.getElementById("mytable");
+    //        var row = table.insertRow(rowCount);
+    //        row.insertCell(0).innerHTML = '<input type="text" class="form-control" value name="contacts[' + rowCount + `].username` + '" />';
+    //        row.insertCell(1).innerHTML = '<input type="text" class="form-control" value name="contacts[' + rowCount + `].password` + '" />';
+    //        row.insertCell(2).innerHTML = '<input type="text" class="form-control" value name="contacts[' + rowCount + `].email` + '" />';
+    //
+    //        table.appendChild(row);
+    //        rowCount = rowCount + 1;
+    //
+    //    }
     $(document).ready(function () {
         $('#invoiceDiv input').datepicker({
             calendarWeeks: true,
             autoclose: true,
             todayHighlight: true
         });
+
+        $('#reportDiv input').datepicker({
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('#startTime').timepicker({
+            showMeridian: false,
+            minuteStep: 10
+        });
+
+        $('#finishTime').timepicker({
+            showMeridian: false,
+            minuteStep: 10
+        });
+
 
     });
 </script>

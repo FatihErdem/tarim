@@ -6,7 +6,7 @@
             <div class="portlet box blue-chambray">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-cogs"></i> Makineler
+                        <i class="fa fa-cogs"></i>Servisler
                     </div>
                 </div>
                 <div class="portlet-body">
@@ -15,19 +15,17 @@
                                aria-describedby="sample_3_info">
                             <thead>
                             <tr>
-                                <th>Makine ID</th>
-                                <th>Makine Türü</th>
-                                <th>Makine Adı</th>
-                                <th></th>
+                                <th>Servis ID</th>
+                                <th>Talep ID</th>
+                                <th>Talep Detayı</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="machine : ${machines}">
-                                <td th:text="${machine.machineId}">0</td>
-                                <td th:text="${machine.machineTypeName}">Onions</td>
-                                <td th:text="${machine.machineName}">Onions</td>
+                            <tr th:each="maintain : ${maintains}">
+                                <td th:text="${maintain.maintainId}">0</td>
+                                <td th:text="${maintain.demandId}">0</td>
                                 <td>
-                                    <a th:href="@{/machines/details/__${machine.machineId}__}">Detay</a>
+                                    <a th:href="@{/maintains/details/__${maintain.maintainId}__}">Detay</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -40,3 +38,4 @@
     </div>
 
 </th:block>
+

@@ -1,0 +1,417 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+
+            <div class="portlet box blue-chambray ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i> Servis Formu
+                    </div>
+                </div>
+
+                <div class="portlet-body form">
+                    <form class="horizontal-form" autocomplete="off" th:action="@{/maintains/details/__${maintain.maintainId}__}" th:object="${maintain}" method="post">
+                        <div class="form-body">
+                            <h3 class="form-section">Talep Bilgileri</h3>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Bayi Seçiniz</label>
+                                        <select th:field="${demand.vendorId}" class="form-control" disabled>
+                                            <option th:each="vendor : ${vendors}" th:value="${vendor.vendorId}"
+                                                    th:text="${vendor.toString()}"></option>
+                                        </select>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorId')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorId}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri Adı</label>
+                                        <div class="">
+                                            <input type="text" class="form-control" id="customerName"
+                                                   placeholder="Müşteri Adı"
+                                                   th:field="${demand.customerName}" th:value="${demand.customerName}" disabled/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri Soyadı</label>
+                                        <input type="text" class="form-control" id="customerSurname"
+                                               placeholder="Müşteri Soyadı"
+                                               th:field="${demand.customerSurname}" th:value="${demand.customerSurname}" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="form-section">Adres Bilgileri</h3>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri Adresi</label>
+                                        <div class="">
+                                            <input type="text" class="form-control" id="customerAddress"
+                                                   placeholder="Müşteri Telefonu"
+                                                   th:field="${demand.customerAddress}" th:value="${demand.customerAddress}" disabled/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri Telefonu</label>
+                                        <input type="text" class="form-control" id="customerTel"
+                                               placeholder="Müşteri Telefonu"
+                                               th:field="${demand.customerTel}" th:value="${demand.customerTel}" disabled />
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri İl</label>
+                                        <select th:field="${demand.customerCity}" class="form-control" id="city-select" disabled>
+                                            <th:block th:if="${demand.customerCity != null}">
+                                                <option th:value="${demand.customerCity}" th:text="${city.cityName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri İlçe</label>
+                                        <select th:field="${demand.customerDistrict}" class="form-control" id="district-select" disabled>
+                                            <th:block th:if="${demand.customerDistrict != null}">
+                                                <option th:value="${demand.customerDistrict}" th:text="${district.districtName}"></option>
+                                                <option value='-' disabled>──────────</option>
+                                            </th:block>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <h3 class="form-section">Talep Bilgileri</h3>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Talep Notu</label>
+                                            <textarea type="text" rows="3" class="form-control" id="demandNote" placeholder="Talep Notu"
+                                                      th:field="${demand.demandNote}" th:value="${demand.demandNote}" disabled></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Talep Türü</label>
+                                        <select class="form-control" th:field="${demand.demandType}"
+                                                name="type-selector" disabled>
+                                            <option th:each="type : ${T(com.decimatech.tarim.model.Demand.Type).values()}"
+                                                    th:value="${type}" th:text="${type.displayName}">
+
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <h3 class="form-section">Makine Bilgileri</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Makine Modeli</label>
+                                        <select th:field="${maintain.machineId}" class="form-control" >
+                                            <option value="0">YOK</option>
+                                            <option th:each="machine : ${machines}" th:value="${machine.machineId}"
+                                                    th:text="${machine.toString()}"></option>
+                                        </select>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('machineId')}" class="alert alert-danger">
+                                        <p th:errors="*{machineId}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Makine Seri No</label>
+                                        <input type="text" id="machineSerialNo" class="form-control"
+                                               th:value="*{machineSerialNo}" th:field="*{machineSerialNo}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('machineSerialNo')}" class="alert alert-danger">
+                                        <p th:errors="*{machineSerialNo}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Garanti Durumu</label>
+                                        <div class="col-md-9">
+                                            <div class="mt-checkbox-list">
+                                                <label class="mt-checkbox">
+                                                    <input type="checkbox" th:checked="*{warranty}" th:field="*{warranty}"> Garantisi Var
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Fatura Tarihi</label>
+                                        <div id="invoiceDiv">
+                                            <input class="form-control form-control-inline input-medium date-picker"
+                                                   data-date-format="dd-mm-yyyy" size="16" id="invoiceDate" type="text"
+                                                   th:field="*{invoiceDate}" th:value="*{invoiceDate}">
+                                        </div>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('invoiceDate')}" class="alert alert-danger">
+                                        <p th:errors="*{invoiceDate}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Garanti Durumu Açıklama</label>
+                                        <input type="text" id="warrantyDesc" class="form-control"
+                                               th:value="*{warrantyDesc}" th:field="*{warrantyDesc}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('warrantyDesc')}" class="alert alert-danger">
+                                        <p th:errors="*{warrantyDesc}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <h3 class="form-section">Servis Bilgileri</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Servis Konusu ve Nedeni</label>
+                                        <textarea id="maintainDesc" class="form-control" rows="2"
+                                                  th:value="*{maintainDesc}" th:field="*{maintainDesc}"></textarea>
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('maintainDesc')}" class="alert alert-danger">
+                                        <p th:errors="*{maintainDesc}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Yapılan İşlem</label>
+                                        <textarea id="process" class="form-control" rows="2"
+                                                  th:value="*{process}" th:field="*{process}"></textarea>
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('process')}" class="alert alert-danger">
+                                        <p th:errors="*{process}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Güzergah</label>
+                                        <input type="text" id="route" class="form-control"
+                                               th:value="*{route}" th:field="*{route}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('route')}" class="alert alert-danger">
+                                        <p th:errors="*{route}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Toplam Mesafe</label>
+                                        <input type="number" id="totalDıstance" class="form-control"
+                                               th:value="*{totalDistance}" th:field="*{totalDistance}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('totalDistance')}" class="alert alert-danger">
+                                        <p th:errors="*{totalDistance}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Başlama Zamanı</label>
+                                        <div class="input-group">
+                                            <input th:field="*{startTime}" th:value="*{startTime}"
+                                                   id="startTime" type="text" class="form-control timepicker timepicker-24">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-clock-o"></i>
+                                                            </button>
+                                                        </span>
+                                        </div>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('startTime')}" class="alert alert-danger">
+                                        <p th:errors="*{startTime}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Bitiş Zamanı</label>
+                                        <div class="input-group">
+                                            <input th:field="*{finishTime}" th:value="*{finishTime}"
+                                                   id="finishTime" type="text" class="form-control timepicker timepicker-24">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-clock-o"></i>
+                                                            </button>
+                                                        </span>
+                                        </div>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('finishTime')}" class="alert alert-danger">
+                                        <p th:errors="*{finishTime}"></p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <h3 class="form-section">Rapor Bilgileri</h3>
+
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Raporun Düzenleyen</label>
+                                        <input type="text" id="reportOwner" class="form-control"
+                                               th:value="*{reportOwnerSig}" th:field="*{reportOwnerSig}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('reportOwnerSig')}" class="alert alert-danger">
+                                        <p th:errors="*{reportOwnerSig}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Müşteri veya Vekili</label>
+                                        <input type="text" id="customerSig" class="form-control"
+                                               th:value="*{customerSig}" th:field="*{customerSig}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('customerSig')}" class="alert alert-danger">
+                                        <p th:errors="*{customerSig}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Servis Müdürü</label>
+                                        <input type="text" id="vendorManagerSig" class="form-control"
+                                               th:value="*{vendorManagerSig}" th:field="*{vendorManagerSig}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('vendorManagerSig')}" class="alert alert-danger">
+                                        <p th:errors="*{vendorManagerSig}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Servis Tarihi</label>
+                                        <div id="reportDiv">
+                                            <input class="form-control form-control-inline input-medium date-picker"
+                                                   data-date-format="dd-mm-yyyy" size="16" id="reportDate" type="text"
+                                                   th:field="*{reportDate}" th:value="*{reportDate}">
+                                        </div>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('reportDate')}" class="alert alert-danger">
+                                        <p th:errors="*{reportDate}"></p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">İşçilik Ücreti</label>
+                                        <input type="number" id="laborCost" class="form-control"
+                                               th:value="*{laborCost}" th:field="*{laborCost}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('laborCost')}" class="alert alert-danger">
+                                        <p th:errors="*{laborCost}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Yol Ücreti</label>
+                                        <input type="number" id="distanceCost" class="form-control"
+                                               th:value="*{distanceCost}" th:field="*{distanceCost}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('distanceCost')}" class="alert alert-danger">
+                                        <p th:errors="*{distanceCost}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Toplam Ücret</label>
+                                        <input type="number" id="totalCost" class="form-control"
+                                               th:value="*{totalCost}" th:field="*{totalCost}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('totalCost')}" class="alert alert-danger">
+                                        <p th:errors="*{totalCost}"></p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-actions">
+                                <button type="submit" name="action" value="update" class="btn blue">
+                                    <i class="fa fa-check"></i> GÜNCELLE
+                                </button>
+
+
+                                <button type="submit" name="action" value="completed" class="btn yellow">
+                                    <i class="fa fa-check"></i> RAPORU MERKEZE YOLLA
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

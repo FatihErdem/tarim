@@ -96,4 +96,9 @@ public class DemandServiceImpl implements DemandService {
         }
         return demandTables;
     }
+
+    @Override
+    public Demand findOne(Long id) {
+        return demandRepository.findOne(id);
+    }
 }

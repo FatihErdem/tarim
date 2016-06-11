@@ -15,4 +15,6 @@ public interface DemandService {
     Demand updateDemand(Demand demand);
 
     List<DemandTable> getDemandTable(Authentication authentication);
+
+    Demand findOne(Long id);
 }

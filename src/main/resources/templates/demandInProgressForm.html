@@ -5,13 +5,13 @@
             <div class="portlet box blue-chambray">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-home"></i>Talep Güncelleme Formu
+                        <i class="fa fa-home"></i>Talep Görüntüleme Formu
                     </div>
                 </div>
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    <form id="vendorForm" th:action="@{/demands/details/__${demand.demandId}__}" th:object="${demand}" method="post"
-                          class="horizontal-form" autocomplete="off">
+                    <form id="vendorForm" th:object="${demand}" method="post"
+                          class="horizontal-form" autocomplete="off" role="form">
                         <div class="form-body">
                             <h3 class="form-section">Talep Formu</h3>
 
@@ -20,7 +20,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label">Bayi Seçiniz</label>
-                                        <select th:field="${demand.vendorId}" class="form-control">
+                                        <select th:field="${demand.vendorId}" class="form-control" disabled>
                                             <option th:each="vendor : ${vendors}" th:value="${vendor.vendorId}"
                                                     th:text="${vendor.toString()}"></option>
                                         </select>
@@ -39,7 +39,7 @@
                                         <div class="">
                                             <input type="text" class="form-control" id="customerName"
                                                    placeholder="Müşteri Adı"
-                                                   th:field="*{customerName}" th:value="*{customerName}"/>
+                                                   th:field="*{customerName}" th:value="*{customerName}" disabled/>
                                         </div>
                                     </div>
 
@@ -52,7 +52,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Müşteri Soyadı</label>
                                         <input type="text" class="form-control" id="customerSurname"
-                                               placeholder="Müşteri Soyadı"
+                                               placeholder="Müşteri Soyadı" disabled
                                                th:field="*{customerSurname}" th:value="*{customerSurname}"/>
                                     </div>
                                     <div th:if="${#fields.hasErrors('customerSurname')}" class="alert alert-danger">
@@ -70,7 +70,7 @@
                                         <label class="control-label">Müşteri Adresi</label>
                                         <div class="">
                                             <input type="text" class="form-control" id="customerAddress"
-                                                   placeholder="Müşteri Telefonu"
+                                                   placeholder="Müşteri Telefonu" disabled
                                                    th:field="*{customerAddress}" th:value="*{customerAddress}"/>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Müşteri Telefonu</label>
                                         <input type="text" class="form-control" id="customerTel"
-                                               placeholder="Müşteri Telefonu"
+                                               placeholder="Müşteri Telefonu" disabled
                                                th:field="*{customerTel}" th:value="*{customerTel}"/>
                                     </div>
                                     <div th:if="${#fields.hasErrors('customerTel')}" class="alert alert-danger">
@@ -96,7 +96,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Müşteri İl</label>
-                                        <select th:field="${demand.customerCity}" class="form-control" id="city-select">
+                                        <select th:field="${demand.customerCity}" class="form-control" id="city-select" disabled>
                                             <th:block th:if="${demand.customerCity != null}">
                                                 <option th:value="${demand.customerCity}" th:text="${city.cityName}"></option>
                                                 <option value='-' disabled>──────────</option>
@@ -111,7 +111,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Müşteri İlçe</label>
-                                        <select th:field="${demand.customerDistrict}" class="form-control" id="district-select">
+                                        <select th:field="${demand.customerDistrict}" class="form-control" id="district-select" disabled>
                                             <th:block th:if="${demand.customerDistrict != null}">
                                                 <option th:value="${demand.customerDistrict}" th:text="${district.districtName}"></option>
                                                 <option value='-' disabled>──────────</option>
@@ -133,7 +133,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Talep Notu</label>
-                                            <textarea type="text" rows="3" class="form-control" id="demandNote" placeholder="Talep Notu"
+                                            <textarea type="text" rows="3" class="form-control" id="demandNote" placeholder="Talep Notu" disabled
                                                       th:field="*{demandNote}" th:value="*{demandNote}"></textarea>
                                     </div>
                                     <div th:if="${#fields.hasErrors('demandNote')}" class="alert alert-danger">
@@ -144,7 +144,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Talep Türü</label>
                                         <select class="form-control" th:field="${demand.demandType}"
-                                                name="type-selector">
+                                                name="type-selector" disabled>
                                             <option th:each="type : ${T(com.decimatech.tarim.model.Demand.Type).values()}"
                                                     th:value="${type}" th:text="${type.displayName}">
 
@@ -153,17 +153,26 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
-                        <div class="form-actions">
-                            <button type="submit" name="action" value="save" class="btn blue">
-                                <i class="fa fa-check"></i> TALEBİ GÜNCELLE</button>
 
-                            <button type="submit" name="action" value="openmaintain" class="btn yellow">
-                                <i class="fa fa-check"></i> SERVİSE ÇEVİR</button>
-                        </div>
+                        <!--<div class="form-actions">-->
+                            <!--<button type="submit" name="action" value="openmaintain" class="btn yellow">-->
+                                <!--<i class="fa fa-check"></i> SERVİSE ÇEVİR-->
+                            <!--</button>-->
+                        <!--</div>-->
                     </form>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="alert alert-info">
+                                <strong>Dikkat!</strong> Talep şu anda servis aşamasındadır. Bu yüzden talebi güncellemeyezsiniz!
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+
                     <!-- END FORM-->
                 </div>
             </div>

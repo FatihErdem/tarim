@@ -1,0 +1,11 @@
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <th:block th:if="${serviceOpened != null}">
+                <div class="alert alert-success">
+                    <p th:text="${serviceOpened}"></p>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</th:block>

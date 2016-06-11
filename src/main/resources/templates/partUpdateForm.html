@@ -14,21 +14,21 @@
                         <div class="form-body">
                             <h3 class="form-section">Parça</h3>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">Ait Olduğu Makine</label>
-                                        <select th:field="${part.machineName}" class="form-control">
+                                        <select th:field="${part.machineId}" class="form-control">
                                             <option value="0">YOK</option>
                                             <option th:each="machine : ${machines}" th:value="${machine.machineId}"
                                                     th:text="${machine.toString()}"></option>
                                         </select>
                                     </div>
-                                    <div th:if="${#fields.hasErrors('machineName')}" class="alert alert-danger">
-                                        <p th:errors="*{machineName}"></p>
+                                    <div th:if="${#fields.hasErrors('machineId')}" class="alert alert-danger">
+                                        <p th:errors="*{machineId}"></p>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">Parça Adı</label>
                                         <input type="text" class="form-control" id="partName"
@@ -36,6 +36,17 @@
                                     </div>
                                     <div th:if="${#fields.hasErrors('partName')}" class="alert alert-danger">
                                         <p th:errors="*{partName}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Parça Fiyatı</label>
+                                        <input type="text" class="form-control" id="partPrice"
+                                               placeholder="Parça Fiyatı" th:field="*{price}" th:value="*{price}"/>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('price')}" class="alert alert-danger">
+                                        <p th:errors="*{price}"></p>
                                     </div>
                                 </div>
 
