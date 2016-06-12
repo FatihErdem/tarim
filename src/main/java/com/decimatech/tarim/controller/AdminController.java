@@ -20,17 +20,17 @@ public class AdminController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getAdminCreateForm(@ModelAttribute Admin admin){
-        return "adminForm";
+        return "adminCreateForm";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String createAdmin(@Valid @ModelAttribute Admin admin, BindingResult result){
         if (result.hasErrors()) {
-            return "vendorForm";
+            return "adminCreateForm";
 
         } else {
             adminService.registerAdmin(admin);
-            return "redirect:/demands";
+            return "redirect:/";
         }
     }
 

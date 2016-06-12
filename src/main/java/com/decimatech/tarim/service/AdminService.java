@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface AdminService {
 
-    Admin getAdminByVendorId(Long id);
-
     Admin getAdminByUsername(String username);
 
     List<Admin> getAllAdmins();

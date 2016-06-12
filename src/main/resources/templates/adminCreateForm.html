@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="portlet box blue-chambray">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-home"></i> Admin Ekleme
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form id="machineForm" th:action="@{/admins/create}" th:object="${admin}" method="post" class="horizontal-form" autocomplete="off">
+                        <div class="form-body">
+                            <h3 class="form-section">Admin Bilgileri</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Admin Kullanıcı Adı</label>
+                                        <input type="text" class="form-control" id="username"
+                                               placeholder="Admin Kullanıcı Adı" th:field="*{username}" th:value="*{username}"/>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger">
+                                        <p th:errors="*{username}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Admin Şifresi</label>
+                                        <input type="password" class="form-control" id="password"
+                                               placeholder="Admin Şifresi" th:field="*{password}" th:value="*{password}"/>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger">
+                                        <p th:errors="*{password}"></p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--/row-->
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn blue">
+                                    <i class="fa fa-check"></i> KAYDET
+                                </button>
+                            </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</th:block>

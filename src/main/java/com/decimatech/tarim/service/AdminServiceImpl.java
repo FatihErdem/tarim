@@ -21,11 +21,6 @@ public class AdminServiceImpl implements AdminService {
     private AdminRepository adminRepository;
 
     @Override
-    public Admin getAdminByVendorId(Long id) {
-        return adminRepository.findOne(id);
-    }
-
-    @Override
     public Admin getAdminByUsername(String username) {
         return adminRepository.getAdminByUsername(username);
     }
