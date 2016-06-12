@@ -135,6 +135,10 @@ public class DemandContoller {
         City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
         District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
 
+        if (demand.isUnread()){
+            demandService.setDemandRead(demand);
+        }
+
         model.addAttribute("demand", demand);
         model.addAttribute("vendors", vendors);
         model.addAttribute("city", demandCity);

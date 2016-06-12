@@ -102,6 +102,10 @@ public class Demand extends AbstractBaseModel {
         this.setDemandState("COMPLETED");
     }
 
+    public void setRead(){
+        this.setUnread(false);
+    }
+
     public Long getDemandId() {
         return demandId;
     }

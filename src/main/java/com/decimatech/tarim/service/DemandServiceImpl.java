@@ -101,4 +101,10 @@ public class DemandServiceImpl implements DemandService {
     public Demand findOne(Long id) {
         return demandRepository.findOne(id);
     }
+
+    @Override
+    public void setDemandRead(Demand demand) {
+        demand.setRead();
+        demandRepository.save(demand);
+    }
 }

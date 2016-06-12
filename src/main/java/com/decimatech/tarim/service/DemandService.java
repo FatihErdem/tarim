@@ -17,4 +17,6 @@ public interface DemandService {
     List<DemandTable> getDemandTable(Authentication authentication);
 
     Demand findOne(Long id);
+
+    void setDemandRead(Demand demand);
 }

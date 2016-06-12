@@ -1,11 +1,17 @@
 package com.decimatech.tarim.repository;
 
 import com.decimatech.tarim.model.Admin;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.Repository;
 
-@Repository
-public interface AdminRepository extends JpaRepository<Admin, Long> {
+import java.util.List;
+
+public interface AdminRepository extends Repository<Admin, Long> {
 
     Admin getAdminByUsername(String username);
+
+    Admin findOne(Long id);
+
+    List<Admin> findAll();
+
+    void save(Admin admin);
 }
