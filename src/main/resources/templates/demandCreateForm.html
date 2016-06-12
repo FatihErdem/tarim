@@ -145,7 +145,7 @@
                                         <label class="control-label">Talep Türü</label>
                                         <select class="form-control" th:field="${demand.demandType}"
                                                 name="type-selector">
-                                            <option th:each="type : ${T(com.decimatech.tarim.model.Demand.Type).values()}"
+                                            <option th:each="type : ${T(com.decimatech.tarim.model.entity.Demand.Type).values()}"
                                                     th:value="${type}" th:text="${type.displayName}">
 
                                             </option>
