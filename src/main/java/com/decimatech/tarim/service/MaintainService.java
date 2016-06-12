@@ -1,5 +1,6 @@
 package com.decimatech.tarim.service;
 
+import com.decimatech.tarim.model.domain.MaintainTable;
 import com.decimatech.tarim.model.entity.Maintain;
 import org.springframework.security.core.Authentication;
 
@@ -17,4 +18,6 @@ public interface MaintainService {
     Maintain findOne(Long id);
 
     Maintain updateMaintain(Maintain maintain);
+
+    List<MaintainTable> getMaintainTable(Authentication authentication);
 }

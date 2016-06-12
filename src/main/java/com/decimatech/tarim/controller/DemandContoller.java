@@ -188,6 +188,8 @@ public class DemandContoller {
         Maintain maintain = maintainService.firstCreate(demandId, demand.getVendorId());
 
         replacedPartService.createAllReplacedParts(maintain.getMaintainId());
+
+        demand.setMaintainId(maintain.getMaintainId());
         demand.setInProgress();
         demand.setDemandId(demandId);
         demandService.updateDemand(demand);

@@ -1,7 +1,9 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.entity.Maintain;
-import com.decimatech.tarim.model.entity.Vendor;
+import com.decimatech.tarim.model.domain.DemandTable;
+import com.decimatech.tarim.model.domain.MaintainTable;
+import com.decimatech.tarim.model.entity.*;
+import com.decimatech.tarim.repository.DemandRepository;
 import com.decimatech.tarim.repository.MaintainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,8 +12,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Service("maintainService")
 @Transactional
@@ -22,6 +26,15 @@ public class MaintainServiceImpl implements MaintainService {
 
     @Autowired
     private VendorService vendorService;
+
+    @Autowired
+    private DemandRepository demandRepository;
+
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private DistrictService districtService;
 
     @Override
     public void createMaintain(Maintain maintain) {
@@ -58,5 +71,54 @@ public class MaintainServiceImpl implements MaintainService {
     @Override
     public Maintain updateMaintain(Maintain maintain) {
         return maintainRepository.save(maintain);
+    }
+
+    @Override
+    public List<MaintainTable> getMaintainTable(Authentication authentication) {
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
+
+        List<Maintain> maintains = new ArrayList<>();
+        List<Demand> demands = new ArrayList<>();
+
+        if (isAdmin) {
+            maintains = maintainRepository.findAll();
+            demands = demandRepository.findAll();
+        } else {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            maintains = maintainRepository.findByVendorId(vendor.getVendorId());
+            demands = demandRepository.findByVendorIdAndDeletedFalse(vendor.getVendorId());
+        }
+
+        List<MaintainTable> maintainTables = new ArrayList<>();
+
+        for(Maintain maintain: maintains){
+
+            MaintainTable maintainTableRow = new MaintainTable();
+            for (Demand demand : demands){
+
+                if (Objects.equals(demand.getMaintainId(), maintain.getMaintainId())){
+                    maintainTableRow.setMaintainId(maintain.getMaintainId());
+                    maintainTableRow.setDemandId(maintain.getDemandId());
+
+                    Vendor vendor = vendorService.getVendorByVendorId(maintain.getVendorId());
+                    String vendorName = vendor.getVendorName();
+                    maintainTableRow.setVendorName(vendorName);
+
+                    City city = cityService.getCityById(demand.getCustomerCity());
+                    District district = districtService.getDistrictById(demand.getCustomerDistrict());
+                    String customerName = demand.getCustomerName() + " " + demand.getCustomerSurname();
+
+                    maintainTableRow.setCity(city.getCityName());
+                    maintainTableRow.setDistrict(district.getDistrictName());
+                    maintainTableRow.setCustomerName(customerName);
+
+                    maintainTables.add(maintainTableRow);
+                }
+            }
+        }
+
+        return maintainTables;
     }
 }

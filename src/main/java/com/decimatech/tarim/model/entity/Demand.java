@@ -18,6 +18,9 @@ public class Demand extends AbstractBaseModel {
     @Column(name = "vendor_id")
     private Long vendorId;
 
+    @Column(name = "maintain_id")
+    private Long maintainId;
+
     @NotBlank
     @Column(name = "customer_name")
     private String customerName;
@@ -94,16 +97,24 @@ public class Demand extends AbstractBaseModel {
         }
     }
 
-    public void setInProgress(){
+    public void setInProgress() {
         this.setDemandState("IN_PROGRESS");
     }
 
-    public void setCompleted(){
+    public void setCompleted() {
         this.setDemandState("COMPLETED");
     }
 
-    public void setRead(){
+    public void setRead() {
         this.setUnread(false);
+    }
+
+    public Long getMaintainId() {
+        return maintainId;
+    }
+
+    public void setMaintainId(Long maintainId) {
+        this.maintainId = maintainId;
     }
 
     public Long getDemandId() {

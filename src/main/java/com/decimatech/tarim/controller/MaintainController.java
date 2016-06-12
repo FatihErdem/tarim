@@ -1,6 +1,7 @@
 package com.decimatech.tarim.controller;
 
 
+import com.decimatech.tarim.model.domain.MaintainTable;
 import com.decimatech.tarim.model.dto.MaintainFormDto;
 import com.decimatech.tarim.model.entity.*;
 import com.decimatech.tarim.repository.MachineRepository;
@@ -58,8 +59,9 @@ public class MaintainController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String getMaintainList(Authentication authentication, Model model) {
 
-        List<Maintain> maintains = maintainService.getAll(authentication);
-        model.addAttribute("maintains", maintains);
+       List<MaintainTable> maintainTableList = maintainService.getMaintainTable(authentication);
+
+        model.addAttribute("maintains", maintainTableList);
         return "maintainList";
     }
 
