@@ -3,7 +3,7 @@ package com.decimatech.tarim.model;
 import javax.persistence.*;
 
 @Entity
-public class ReplacedPart {
+public class ReplacedPart extends AbstractBaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

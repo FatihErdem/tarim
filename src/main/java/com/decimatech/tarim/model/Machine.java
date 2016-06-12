@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Machine {
+public class Machine extends AbstractBaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

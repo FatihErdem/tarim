@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 
 @Entity
-public class MachineType {
+public class MachineType extends AbstractBaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

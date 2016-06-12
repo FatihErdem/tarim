@@ -1,12 +1,17 @@
 package com.decimatech.tarim.repository;
 
 import com.decimatech.tarim.model.Vendor;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.Repository;
 
-@Repository
-public interface VendorRepository extends JpaRepository<Vendor, Long> {
+import java.util.List;
+
+public interface VendorRepository extends Repository<Vendor, Long> {
 
     Vendor getVendorByUsername(String username);
 
+    Vendor save(Vendor vendor);
+
+    Vendor findOne(Long id);
+
+    List<Vendor> findAll();
 }
