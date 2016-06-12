@@ -4,10 +4,7 @@ import com.decimatech.tarim.model.*;
 import com.decimatech.tarim.repository.CityRepository;
 import com.decimatech.tarim.repository.DemandRepository;
 import com.decimatech.tarim.repository.DistrictRepository;
-import com.decimatech.tarim.service.DemandService;
-import com.decimatech.tarim.service.MaintainService;
-import com.decimatech.tarim.service.ReplacedPartService;
-import com.decimatech.tarim.service.VendorService;
+import com.decimatech.tarim.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -41,10 +38,10 @@ public class DemandContoller {
     private VendorService vendorService;
 
     @Autowired
-    private CityRepository cityRepository;
+    private CityService cityService;
 
     @Autowired
-    private DistrictRepository districtRepository;
+    private DistrictService districtService;
 
     @Autowired
     private MaintainService maintainService;
@@ -90,8 +87,8 @@ public class DemandContoller {
         }
 
         if (bindingResult.hasErrors()) {
-            City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
-            District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+            City demandCity = cityService.getCityById(demand.getCustomerCity());
+            District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
 
             model.addAttribute("city", demandCity);
             model.addAttribute("district", demandDistrict);
@@ -132,8 +129,8 @@ public class DemandContoller {
 
         Demand demand = demandRepository.findOne(id);
 
-        City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
-        District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+        City demandCity = cityService.getCityById(demand.getCustomerCity());
+        District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
 
         if (demand.isUnread()){
             demandService.setDemandRead(demand);
@@ -182,8 +179,8 @@ public class DemandContoller {
         }
 
 
-        City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
-        District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+        City demandCity = cityService.getCityById(demand.getCustomerCity());
+        District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
 
         model.addAttribute("vendors", vendors);
         model.addAttribute("city", demandCity);

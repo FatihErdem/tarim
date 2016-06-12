@@ -5,6 +5,8 @@ import com.decimatech.tarim.model.District;
 import com.decimatech.tarim.model.Vendor;
 import com.decimatech.tarim.repository.CityRepository;
 import com.decimatech.tarim.repository.DistrictRepository;
+import com.decimatech.tarim.service.CityService;
+import com.decimatech.tarim.service.DistrictService;
 import com.decimatech.tarim.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,13 +28,13 @@ import java.util.Objects;
 public class VendorController {
 
     @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private DistrictService districtService;
+
+    @Autowired
     private VendorService vendorService;
-
-    @Autowired
-    private CityRepository cityRepository;
-
-    @Autowired
-    private DistrictRepository districtRepository;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getVendorCreateForm(@ModelAttribute Vendor vendor) {
@@ -44,8 +46,8 @@ public class VendorController {
 
         if (result.hasErrors()) {
 
-            City vendorCity = cityRepository.findByCityId(vendor.getVendorCity());
-            District vendorDistrict = districtRepository.findByDistrictId(vendor.getVendorDistrict());
+            City vendorCity = cityService.getCityById(vendor.getVendorCity());
+            District vendorDistrict = districtService.getDistrictById(vendor.getVendorDistrict());
 
             model.addAttribute("vendor", vendor);
             model.addAttribute("city", vendorCity);
@@ -71,8 +73,8 @@ public class VendorController {
 
         Vendor vendor = vendorService.getVendorByVendorId(id);
 
-        City vendorCity = cityRepository.findByCityId(vendor.getVendorCity());
-        District vendorDistrict = districtRepository.findByDistrictId(vendor.getVendorDistrict());
+        City vendorCity = cityService.getCityById(vendor.getVendorCity());
+        District vendorDistrict = districtService.getDistrictById(vendor.getVendorDistrict());
 
         model.addAttribute("vendor", vendor);
         model.addAttribute("city", vendorCity);
@@ -91,8 +93,8 @@ public class VendorController {
                 vendorService.updateVendor(vendor);
                 return "redirect:/vendors";
             } else {
-                City vendorCity = cityRepository.findByCityId(vendor.getVendorCity());
-                District vendorDistrict = districtRepository.findByDistrictId(vendor.getVendorDistrict());
+                City vendorCity = cityService.getCityById(vendor.getVendorCity());
+                District vendorDistrict = districtService.getDistrictById(vendor.getVendorDistrict());
 
                 model.addAttribute("vendor", vendor);
                 model.addAttribute("city", vendorCity);

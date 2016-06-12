@@ -3,7 +3,9 @@ package com.decimatech.tarim.controller;
 import com.decimatech.tarim.model.*;
 import com.decimatech.tarim.repository.CityRepository;
 import com.decimatech.tarim.repository.DistrictRepository;
+import com.decimatech.tarim.service.CityService;
 import com.decimatech.tarim.service.DemandService;
+import com.decimatech.tarim.service.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +20,13 @@ import java.util.List;
 public class ApiController {
 
     @Autowired
-    private CityRepository cityRepository;
+    private CityService cityService;
+
+    @Autowired
+    private DistrictService districtService;
 
     @Autowired
     private DemandService demandService;
-
-    @Autowired
-    private DistrictRepository districtRepository;
 
     @ResponseBody
     @RequestMapping(value = "/notifications", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -32,7 +34,6 @@ public class ApiController {
 
         Notification notification = new Notification();
         List<Demand> demands = demandService.gellAllUnreadDemands(authentication);
-        Date now = new Date();
 
         List<NotificationDetail> notificationDetails = new ArrayList<>();
 
@@ -47,7 +48,7 @@ public class ApiController {
 
         notification.setDetails(notificationDetails);
         notification.setUnreadCount(demands.size());
-        System.out.println("Girdi " + new SimpleDateFormat("dd/MM HH:mm:ss").format(new Date()));
+
         return notification;
 
     }
@@ -55,15 +56,14 @@ public class ApiController {
     @ResponseBody
     @RequestMapping(value = "/cities", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<City> getCities() {
-        List<City> cities = cityRepository.findAllByOrderByCityNameAsc();
-        return cities;
+        return cityService.getAllCities();
     }
 
     @ResponseBody
     @RequestMapping(value = "/districts/{cityId}", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<District> getDistricts(@PathVariable("cityId") Long cityId){
 
-        return districtRepository.findByCityIdOrderByDistrictNameAsc(cityId);
+        return districtService.getDistrictsByCityId(cityId);
     }
 
 }

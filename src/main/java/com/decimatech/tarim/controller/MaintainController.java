@@ -7,10 +7,7 @@ import com.decimatech.tarim.repository.CityRepository;
 import com.decimatech.tarim.repository.DistrictRepository;
 import com.decimatech.tarim.repository.MachineRepository;
 import com.decimatech.tarim.repository.ReplacedPartRepository;
-import com.decimatech.tarim.service.DemandService;
-import com.decimatech.tarim.service.MaintainService;
-import com.decimatech.tarim.service.ReplacedPartService;
-import com.decimatech.tarim.service.VendorService;
+import com.decimatech.tarim.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -46,10 +43,10 @@ public class MaintainController {
     private DemandService demandService;
 
     @Autowired
-    private CityRepository cityRepository;
+    private CityService cityService;
 
     @Autowired
-    private DistrictRepository districtRepository;
+    private DistrictService districtService;
 
     @Autowired
     private VendorService vendorService;
@@ -108,8 +105,8 @@ public class MaintainController {
         Maintain maintain = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain.getDemandId());
 
-        City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
-        District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+        City demandCity = cityService.getCityById(demand.getCustomerCity());
+        District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
 
 
         List<ReplacedPart> replacedPartList = replacedPartRepository.findByMaintainIdOrderByReplacedPartIdAsc(maintain.getMaintainId());
@@ -143,8 +140,8 @@ public class MaintainController {
 
         Maintain maintain1 = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain1.getDemandId());
-        City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
-        District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+        City demandCity = cityService.getCityById(demand.getCustomerCity());
+        District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<Machine> machines = machineRepository.findAll();
 
@@ -186,8 +183,8 @@ public class MaintainController {
 
         Maintain maintain1 = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain1.getDemandId());
-        City demandCity = cityRepository.findByCityId(demand.getCustomerCity());
-        District demandDistrict = districtRepository.findByDistrictId(demand.getCustomerDistrict());
+        City demandCity = cityService.getCityById(demand.getCustomerCity());
+        District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<Machine> machines = machineRepository.findAll();
 
