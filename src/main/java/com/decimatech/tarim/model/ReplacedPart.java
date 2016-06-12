@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class ReplacedPart extends AbstractBaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "replaced_part_id")
     private Long replacedPartId;
 

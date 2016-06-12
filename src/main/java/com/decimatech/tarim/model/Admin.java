@@ -12,7 +12,7 @@ import java.util.List;
 public class Admin extends AbstractUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "admin_id")
     private Long adminId;
 

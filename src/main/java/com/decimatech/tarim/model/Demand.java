@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class Demand extends AbstractBaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "demand_id")
     private Long demandId;
 

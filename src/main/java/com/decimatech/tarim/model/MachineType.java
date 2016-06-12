@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class MachineType extends AbstractBaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "machine_type_id")
     private Long machineTypeId;
 

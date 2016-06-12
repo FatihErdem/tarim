@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class District {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "district_id")
     private Long districtId;
 

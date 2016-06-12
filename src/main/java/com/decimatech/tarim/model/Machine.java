@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class Machine extends AbstractBaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "machine_id")
     private Long machineId;
 
