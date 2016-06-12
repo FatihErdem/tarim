@@ -1,4 +1,4 @@
-package com.decimatech.tarim.model;
+package com.decimatech.tarim.model.entity;
 
 import javax.persistence.*;
 

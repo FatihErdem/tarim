@@ -1,10 +1,8 @@
 package com.decimatech.tarim.controller;
 
 
-import com.decimatech.tarim.model.*;
 import com.decimatech.tarim.model.dto.MaintainFormDto;
-import com.decimatech.tarim.repository.CityRepository;
-import com.decimatech.tarim.repository.DistrictRepository;
+import com.decimatech.tarim.model.entity.*;
 import com.decimatech.tarim.repository.MachineRepository;
 import com.decimatech.tarim.repository.ReplacedPartRepository;
 import com.decimatech.tarim.service.*;

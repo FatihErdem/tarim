@@ -1,7 +1,7 @@
 package com.decimatech.tarim.service;
 
 
-import com.decimatech.tarim.model.Vendor;
+import com.decimatech.tarim.model.entity.Vendor;
 
 import java.util.List;
 

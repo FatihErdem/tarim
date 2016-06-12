@@ -1,6 +1,6 @@
 package com.decimatech.tarim.repository;
 
-import com.decimatech.tarim.model.District;
+import com.decimatech.tarim.model.entity.District;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;

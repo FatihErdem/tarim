@@ -1,8 +1,8 @@
 package com.decimatech.tarim.controller;
 
-import com.decimatech.tarim.model.Machine;
-import com.decimatech.tarim.model.Part;
-import com.decimatech.tarim.model.PartTable;
+import com.decimatech.tarim.model.entity.Machine;
+import com.decimatech.tarim.model.entity.Part;
+import com.decimatech.tarim.model.entity.PartTable;
 import com.decimatech.tarim.repository.MachineRepository;
 import com.decimatech.tarim.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;

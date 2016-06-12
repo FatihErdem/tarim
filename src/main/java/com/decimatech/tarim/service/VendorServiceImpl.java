@@ -1,6 +1,6 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.Vendor;
+import com.decimatech.tarim.model.entity.Vendor;
 import com.decimatech.tarim.repository.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

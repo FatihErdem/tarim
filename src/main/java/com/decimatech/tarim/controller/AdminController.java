@@ -1,6 +1,6 @@
 package com.decimatech.tarim.controller;
 
-import com.decimatech.tarim.model.Admin;
+import com.decimatech.tarim.model.entity.Admin;
 import com.decimatech.tarim.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

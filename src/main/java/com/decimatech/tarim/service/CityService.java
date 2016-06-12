@@ -1,8 +1,7 @@
 package com.decimatech.tarim.service;
 
 
-import com.decimatech.tarim.model.City;
-import org.springframework.stereotype.Service;
+import com.decimatech.tarim.model.entity.City;
 
 import java.util.List;
 

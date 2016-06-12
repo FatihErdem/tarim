@@ -1,8 +1,8 @@
 package com.decimatech.tarim.model.dto;
 
-import com.decimatech.tarim.model.Demand;
-import com.decimatech.tarim.model.Maintain;
-import com.decimatech.tarim.model.ReplacedPart;
+import com.decimatech.tarim.model.entity.Demand;
+import com.decimatech.tarim.model.entity.Maintain;
+import com.decimatech.tarim.model.entity.ReplacedPart;
 
 import javax.validation.Valid;
 import java.util.List;

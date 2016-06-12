@@ -1,8 +1,8 @@
 package com.decimatech.tarim.controller;
 
-import com.decimatech.tarim.model.Machine;
-import com.decimatech.tarim.model.MachineTable;
-import com.decimatech.tarim.model.MachineType;
+import com.decimatech.tarim.model.entity.Machine;
+import com.decimatech.tarim.model.entity.MachineTable;
+import com.decimatech.tarim.model.entity.MachineType;
 import com.decimatech.tarim.repository.MachineRepository;
 import com.decimatech.tarim.repository.MachineTypeRepository;
 import org.apache.commons.logging.Log;

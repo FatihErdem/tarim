@@ -1,8 +1,8 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.Demand;
-import com.decimatech.tarim.model.DemandTable;
-import com.decimatech.tarim.model.Vendor;
+import com.decimatech.tarim.model.entity.Demand;
+import com.decimatech.tarim.model.domain.DemandTable;
+import com.decimatech.tarim.model.entity.Vendor;
 import com.decimatech.tarim.repository.DemandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

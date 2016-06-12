@@ -1,6 +1,6 @@
 package com.decimatech.tarim.repository;
 
-import com.decimatech.tarim.model.Demand;
+import com.decimatech.tarim.model.entity.Demand;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;

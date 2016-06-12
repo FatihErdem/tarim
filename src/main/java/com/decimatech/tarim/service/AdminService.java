@@ -1,6 +1,6 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.Admin;
+import com.decimatech.tarim.model.entity.Admin;
 
 import java.util.List;
 

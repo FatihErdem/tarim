@@ -42,7 +42,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">Parça Fiyatı</label>
-                                        <input type="text" class="form-control" id="partPrice"
+                                        <input type="number" class="form-control" id="partPrice"
                                                placeholder="Parça Fiyatı" th:field="*{price}" th:value="*{price}"/>
                                     </div>
                                     <div th:if="${#fields.hasErrors('price')}" class="alert alert-danger">

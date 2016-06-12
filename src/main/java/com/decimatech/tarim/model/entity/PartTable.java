@@ -1,6 +1,8 @@
-package com.decimatech.tarim.model;
+package com.decimatech.tarim.model.entity;
 
-public class PartTable extends Part{
+import com.decimatech.tarim.model.entity.Part;
+
+public class PartTable extends Part {
 
     private String machineName;
 

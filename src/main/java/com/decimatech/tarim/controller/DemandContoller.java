@@ -1,9 +1,8 @@
 package com.decimatech.tarim.controller;
 
-import com.decimatech.tarim.model.*;
-import com.decimatech.tarim.repository.CityRepository;
+import com.decimatech.tarim.model.domain.DemandTable;
+import com.decimatech.tarim.model.entity.*;
 import com.decimatech.tarim.repository.DemandRepository;
-import com.decimatech.tarim.repository.DistrictRepository;
 import com.decimatech.tarim.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

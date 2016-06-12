@@ -1,5 +1,6 @@
-package com.decimatech.tarim.model;
+package com.decimatech.tarim.model.entity;
 
+import com.decimatech.tarim.model.entity.AbstractBaseModel;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,5 +1,7 @@
-package com.decimatech.tarim.model;
+package com.decimatech.tarim.model.entity;
 
+
+import com.decimatech.tarim.model.entity.Machine;
 
 public class MachineTable extends Machine {
 

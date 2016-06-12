@@ -1,10 +1,8 @@
 package com.decimatech.tarim.controller;
 
-import com.decimatech.tarim.model.City;
-import com.decimatech.tarim.model.District;
-import com.decimatech.tarim.model.Vendor;
-import com.decimatech.tarim.repository.CityRepository;
-import com.decimatech.tarim.repository.DistrictRepository;
+import com.decimatech.tarim.model.entity.City;
+import com.decimatech.tarim.model.entity.District;
+import com.decimatech.tarim.model.entity.Vendor;
 import com.decimatech.tarim.service.CityService;
 import com.decimatech.tarim.service.DistrictService;
 import com.decimatech.tarim.service.VendorService;

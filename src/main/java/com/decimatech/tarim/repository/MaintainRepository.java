@@ -1,9 +1,7 @@
 package com.decimatech.tarim.repository;
 
-import com.decimatech.tarim.model.Maintain;
-import org.jboss.jandex.Main;
+import com.decimatech.tarim.model.entity.Maintain;
 import org.springframework.data.repository.Repository;
-import org.springframework.security.core.Authentication;
 
 import java.util.List;
 

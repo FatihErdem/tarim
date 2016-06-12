@@ -1,6 +1,6 @@
 package com.decimatech.tarim.repository;
 
-import com.decimatech.tarim.model.ReplacedPart;
+import com.decimatech.tarim.model.entity.ReplacedPart;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;

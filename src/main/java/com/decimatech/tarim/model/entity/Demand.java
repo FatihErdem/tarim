@@ -1,4 +1,4 @@
-package com.decimatech.tarim.model;
+package com.decimatech.tarim.model.entity;
 
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.NotBlank;

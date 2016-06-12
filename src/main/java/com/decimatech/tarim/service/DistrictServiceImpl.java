@@ -1,6 +1,6 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.District;
+import com.decimatech.tarim.model.entity.District;
 import com.decimatech.tarim.repository.DistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

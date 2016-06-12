@@ -1,7 +1,7 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.Maintain;
-import com.decimatech.tarim.model.Vendor;
+import com.decimatech.tarim.model.entity.Maintain;
+import com.decimatech.tarim.model.entity.Vendor;
 import com.decimatech.tarim.repository.MaintainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

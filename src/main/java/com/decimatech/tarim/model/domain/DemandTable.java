@@ -1,4 +1,6 @@
-package com.decimatech.tarim.model;
+package com.decimatech.tarim.model.domain;
+
+import com.decimatech.tarim.model.entity.Demand;
 
 public class DemandTable extends Demand {
 

@@ -1,6 +1,6 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.ReplacedPart;
+import com.decimatech.tarim.model.entity.ReplacedPart;
 
 import java.util.List;
 

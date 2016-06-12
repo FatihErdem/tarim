@@ -1,6 +1,6 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.District;
+import com.decimatech.tarim.model.entity.District;
 
 import java.util.List;
 
