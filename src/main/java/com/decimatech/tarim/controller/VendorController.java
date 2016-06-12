@@ -36,7 +36,7 @@ public class VendorController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getVendorCreateForm(@ModelAttribute Vendor vendor) {
-        return "vendorCreateForm";
+        return "admin/vendorCreateForm";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -50,7 +50,7 @@ public class VendorController {
             model.addAttribute("vendor", vendor);
             model.addAttribute("city", vendorCity);
             model.addAttribute("district", vendorDistrict);
-            return "vendorCreateForm";
+            return "admin/vendorCreateForm";
 
         } else {
             vendorService.registerVendor(vendor);
@@ -63,7 +63,7 @@ public class VendorController {
         List<Vendor> vendors = vendorService.getAllVendors();
 
         model.addAttribute("vendors", vendors);
-        return "vendorList";
+        return "admin/vendorList";
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
@@ -77,7 +77,7 @@ public class VendorController {
         model.addAttribute("vendor", vendor);
         model.addAttribute("city", vendorCity);
         model.addAttribute("district", vendorDistrict);
-        return "vendorUpdateForm";
+        return "admin/vendorUpdateForm";
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST)
@@ -97,7 +97,7 @@ public class VendorController {
                 model.addAttribute("vendor", vendor);
                 model.addAttribute("city", vendorCity);
                 model.addAttribute("district", vendorDistrict);
-                return "vendorUpdateForm";
+                return "admin/vendorUpdateForm";
             }
 
         } else {

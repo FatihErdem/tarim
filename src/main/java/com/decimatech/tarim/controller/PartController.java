@@ -36,7 +36,7 @@ public class PartController {
         List<Machine> machines = machineRepository.findAll();
         model.addAttribute("machines", machines);
 
-        return "partCreateForm";
+        return "admin/partCreateForm";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -45,7 +45,7 @@ public class PartController {
         if (result.hasErrors()) {
             List<Machine> machines = machineRepository.findAll();
             model.addAttribute("machines", machines);
-            return "partCreateForm";
+            return "admin/partCreateForm";
         } else {
             partRepository.save(part);
             return "redirect:/parts";
@@ -83,7 +83,7 @@ public class PartController {
 
         model.addAttribute("parts", partTables);
 
-        return "partList";
+        return "admin/partList";
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
@@ -93,7 +93,7 @@ public class PartController {
         Part part = partRepository.findOne(id);
         model.addAttribute("part", part);
         model.addAttribute("machines", machines);
-        return "partUpdateForm";
+        return "admin/partUpdateForm";
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST)
@@ -103,7 +103,7 @@ public class PartController {
             part.setPartId(id);
             List<Machine> machines = machineRepository.findAll();
             model.addAttribute("machines", machines);
-            return "partUpdateForm";
+            return "admin/partUpdateForm";
         } else {
             part.setPartId(id);
             partRepository.save(part);

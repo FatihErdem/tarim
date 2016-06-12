@@ -40,19 +40,19 @@ public class MachineController {
     public String getTypeList(Model model) {
         List<MachineType> machineTypes = machineTypeRepository.findAll();
         model.addAttribute("machineTypes", machineTypes);
-        return "machineTypeList";
+        return "admin/machineTypeList";
     }
 
     @RequestMapping(value = "/types/create", method = RequestMethod.GET)
     public String getTypeForm(@ModelAttribute MachineType machineType) {
-        return "machineTypeCreateForm";
+        return "admin/machineTypeCreateForm";
     }
 
     @RequestMapping(value = "/types/create", method = RequestMethod.POST)
     public String createMachineType(@Valid @ModelAttribute MachineType machineType, BindingResult result) {
 
         if (result.hasErrors()) {
-            return "machineTypeCreateForm";
+            return "admin/machineTypeCreateForm";
         }
         machineTypeRepository.save(machineType);
         return "redirect:/machines/types";
@@ -62,7 +62,7 @@ public class MachineController {
     public String getMachineTypeDetails(@PathVariable("id") Long id, Model model) {
         MachineType machineType = machineTypeRepository.findOne(id);
         model.addAttribute("machineType", machineType);
-        return "machineTypeUpdateForm";
+        return "admin/machineTypeUpdateForm";
     }
 
     @RequestMapping(value = "/types/details/{id}", method = RequestMethod.POST)
@@ -71,7 +71,7 @@ public class MachineController {
         if (result.hasErrors()) {
             machineType.setMachineTypeId(id);
             model.addAttribute("machineType", machineType);
-            return "machineTypeUpdateForm";
+            return "admin/machineTypeUpdateForm";
         }
         machineType.setMachineTypeId(id);
         machineTypeRepository.save(machineType);
@@ -84,7 +84,7 @@ public class MachineController {
         List<MachineType> machineTypes = machineTypeRepository.findAll();
         model.addAttribute("machineTypes", machineTypes);
 
-        return "machineCreateForm";
+        return "admin/machineCreateForm";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -93,7 +93,7 @@ public class MachineController {
         if (result.hasErrors()) {
             List<MachineType> machineTypes = machineTypeRepository.findAll();
             model.addAttribute("machineTypes", machineTypes);
-            return "machineCreateForm";
+            return "admin/machineCreateForm";
         } else {
             machineRepository.save(machine);
             return "redirect:/machines";
@@ -132,7 +132,7 @@ public class MachineController {
         model.addAttribute("machines", machineTables);
         log.info("MachineList " + TimeUnit.MILLISECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) + " ms");
 
-        return "machineList";
+        return "admin/machineList";
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
@@ -142,7 +142,7 @@ public class MachineController {
 
         model.addAttribute("machineTypes", machineTypes);
         model.addAttribute("machine", machine);
-        return "machineUpdateForm";
+        return "admin/machineUpdateForm";
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST)
@@ -152,7 +152,7 @@ public class MachineController {
             machine.setMachineId(id);
             List<MachineType> machineTypes = machineTypeRepository.findAll();
             model.addAttribute("machineTypes", machineTypes);
-            return "machineUpdateForm";
+            return "admin/machineUpdateForm";
         } else {
             machine.setMachineId(id);
             machineRepository.save(machine);

@@ -26,7 +26,7 @@ public class AdminController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String createAdmin(@Valid @ModelAttribute Admin admin, BindingResult result){
         if (result.hasErrors()) {
-            return "adminCreateForm";
+            return "admin/adminCreateForm";
 
         } else {
             adminService.registerAdmin(admin);
