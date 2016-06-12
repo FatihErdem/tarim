@@ -11,5 +11,5 @@ public interface ReplacedPartRepository extends Repository<ReplacedPart, Long> {
 
     List<ReplacedPart> findAll();
 
-    List<ReplacedPart> findByMaintainId(Long id);
+    List<ReplacedPart> findByMaintainIdOrderByReplacedPartIdAsc(Long id);
 }

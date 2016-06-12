@@ -64,7 +64,8 @@ public class Demand extends AbstractBaseModel {
         IN_PROGRESS("Servis Aşamasında"),
         COMPLETED("Tamamlandı"),
         REJECTED("Reddedildi"),
-        UNCOMPLETED("Yarım Kaldı");
+        UNCOMPLETED("Yarım Kaldı"),
+        APPROVED("Onaylandı");
 
         private final String displayName;
 
@@ -95,6 +96,10 @@ public class Demand extends AbstractBaseModel {
 
     public void setInProgress(){
         this.setDemandState("IN_PROGRESS");
+    }
+
+    public void setCompleted(){
+        this.setDemandState("COMPLETED");
     }
 
     public Long getDemandId() {

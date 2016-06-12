@@ -6,6 +6,7 @@ import com.decimatech.tarim.repository.DemandRepository;
 import com.decimatech.tarim.repository.DistrictRepository;
 import com.decimatech.tarim.service.DemandService;
 import com.decimatech.tarim.service.MaintainService;
+import com.decimatech.tarim.service.ReplacedPartService;
 import com.decimatech.tarim.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,6 +48,9 @@ public class DemandContoller {
 
     @Autowired
     private MaintainService maintainService;
+
+    @Autowired
+    private ReplacedPartService replacedPartService;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getDemandForm(Model model, Authentication authentication) {
@@ -181,8 +185,9 @@ public class DemandContoller {
         model.addAttribute("city", demandCity);
         model.addAttribute("district", demandDistrict);
 
-        maintainService.firstCreate(demandId, demand.getVendorId());
+        Maintain maintain = maintainService.firstCreate(demandId, demand.getVendorId());
 
+        replacedPartService.createAllReplacedParts(maintain.getMaintainId());
         demand.setInProgress();
         demand.setDemandId(demandId);
         demandService.updateDemand(demand);

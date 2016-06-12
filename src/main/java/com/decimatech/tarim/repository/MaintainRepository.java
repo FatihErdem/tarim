@@ -16,4 +16,5 @@ public interface MaintainRepository extends Repository<Maintain, Long> {
     List<Maintain> findByVendorId(Long id);
 
     Maintain findOne(Long id);
+
 }

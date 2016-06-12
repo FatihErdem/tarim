@@ -138,7 +138,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Makine Modeli</label>
-                                        <select th:field="*{maintain.machineId}" class="form-control">
+                                        <select th:field="*{maintain.machineId}" class="form-control" disabled>
                                             <option value="0">YOK</option>
                                             <option th:each="machine : ${machines}" th:value="${machine.machineId}"
                                                     th:text="${machine.toString()}"></option>
@@ -153,7 +153,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Makine Seri No</label>
                                         <input type="text" id="machineSerialNo" class="form-control"
-                                               th:value="*{maintain.machineSerialNo}" th:field="*{maintain.machineSerialNo}">
+                                               th:value="*{maintain.machineSerialNo}" th:field="*{maintain.machineSerialNo}" disabled>
 
                                     </div>
                                     <div th:if="${#fields.hasErrors('maintain.machineSerialNo')}" class="alert alert-danger">
@@ -170,7 +170,7 @@
                                         <div class="col-md-9">
                                             <div class="mt-checkbox-list">
                                                 <label class="mt-checkbox">
-                                                    <input type="checkbox" th:checked="*{maintain.warranty}" th:field="*{maintain.warranty}"> Garantisi Var
+                                                    <input disabled type="checkbox" th:checked="*{maintain.warranty}" th:field="*{maintain.warranty}"> Garantisi Var
                                                     <span></span>
                                                 </label>
                                             </div>
@@ -182,7 +182,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Fatura Tarihi</label>
                                         <div id="invoiceDiv">
-                                            <input class="form-control form-control-inline input-medium date-picker"
+                                            <input disabled class="form-control form-control-inline input-medium date-picker"
                                                    data-date-format="dd-mm-yyyy" size="16" id="invoiceDate" type="text"
                                                    th:field="*{maintain.invoiceDate}" th:value="*{maintain.invoiceDate}">
                                         </div>
@@ -195,7 +195,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Garanti Durumu Açıklama</label>
-                                        <input type="text" id="warrantyDesc" class="form-control"
+                                        <input disabled type="text" id="warrantyDesc" class="form-control"
                                                th:value="*{maintain.warrantyDesc}" th:field="*{maintain.warrantyDesc}">
 
                                     </div>
@@ -212,7 +212,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Servis Konusu ve Nedeni</label>
-                                        <textarea id="maintainDesc" class="form-control" rows="2"
+                                        <textarea disabled id="maintainDesc" class="form-control" rows="2"
                                                   th:value="*{maintain.maintainDesc}" th:field="*{maintain.maintainDesc}"></textarea>
 
                                     </div>
@@ -224,7 +224,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Yapılan İşlem</label>
-                                        <textarea id="process" class="form-control" rows="2"
+                                        <textarea disabled id="process" class="form-control" rows="2"
                                                   th:value="*{maintain.process}" th:field="*{maintain.process}"></textarea>
 
                                     </div>
@@ -239,7 +239,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Güzergah</label>
-                                        <input type="text" id="route" class="form-control"
+                                        <input disabled type="text" id="route" class="form-control"
                                                th:value="*{maintain.route}" th:field="*{maintain.route}">
 
                                     </div>
@@ -251,7 +251,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Toplam Mesafe</label>
-                                        <input type="number" id="totalDıstance" class="form-control"
+                                        <input disabled type="number" id="totalDıstance" class="form-control"
                                                th:value="*{maintain.totalDistance}" th:field="*{maintain.totalDistance}">
 
                                     </div>
@@ -264,7 +264,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Başlama Zamanı</label>
                                         <div class="input-group">
-                                            <input th:field="*{maintain.startTime}" th:value="*{maintain.startTime}"
+                                            <input disabled th:field="*{maintain.startTime}" th:value="*{maintain.startTime}"
                                                    id="startTime" type="text" class="form-control timepicker timepicker-24">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
@@ -281,7 +281,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Bitiş Zamanı</label>
                                         <div class="input-group">
-                                            <input th:field="*{maintain.finishTime}" th:value="*{maintain.finishTime}"
+                                            <input disabled th:field="*{maintain.finishTime}" th:value="*{maintain.finishTime}"
                                                    id="finishTime" type="text" class="form-control timepicker timepicker-24">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
@@ -305,7 +305,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Raporun Düzenleyen</label>
-                                        <input type="text" id="reportOwner" class="form-control"
+                                        <input disabled type="text" id="reportOwner" class="form-control"
                                                th:value="*{maintain.reportOwnerSig}" th:field="*{maintain.reportOwnerSig}">
 
                                     </div>
@@ -317,7 +317,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Müşteri veya Vekili</label>
-                                        <input type="text" id="customerSig" class="form-control"
+                                        <input disabled type="text" id="customerSig" class="form-control"
                                                th:value="*{maintain.customerSig}" th:field="*{maintain.customerSig}">
 
                                     </div>
@@ -329,7 +329,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Servis Müdürü</label>
-                                        <input type="text" id="vendorManagerSig" class="form-control"
+                                        <input disabled type="text" id="vendorManagerSig" class="form-control"
                                                th:value="*{maintain.vendorManagerSig}" th:field="*{maintain.vendorManagerSig}">
 
                                     </div>
@@ -342,7 +342,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Servis Tarihi</label>
                                         <div id="reportDiv">
-                                            <input class="form-control form-control-inline input-medium date-picker"
+                                            <input disabled class="form-control form-control-inline input-medium date-picker"
                                                    data-date-format="dd-mm-yyyy" size="16" id="reportDate" type="text"
                                                    th:field="*{maintain.reportDate}" th:value="*{maintain.reportDate}">
                                         </div>
@@ -359,7 +359,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">İşçilik Ücreti</label>
-                                        <input type="number" id="laborCost" class="form-control"
+                                        <input disabled type="number" id="laborCost" class="form-control"
                                                th:value="*{maintain.laborCost}" th:field="*{maintain.laborCost}">
 
                                     </div>
@@ -371,7 +371,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Yol Ücreti</label>
-                                        <input type="number" id="distanceCost" class="form-control"
+                                        <input disabled type="number" id="distanceCost" class="form-control"
                                                th:value="*{maintain.distanceCost}" th:field="*{maintain.distanceCost}">
 
                                     </div>
@@ -383,7 +383,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Toplam Ücret</label>
-                                        <input type="number" id="totalCost" class="form-control"
+                                        <input disabled type="number" id="totalCost" class="form-control"
                                                th:value="*{maintain.totalCost}" th:field="*{maintain.totalCost}">
 
                                     </div>
@@ -411,10 +411,14 @@
                                         <tbody>
                                         <tr th:each="replacedPart, stat : *{replacedPartList}">
                                             <td th:text="${__${stat.index+1}__}"></td>
-                                            <td><input type="text" class="form-control" th:value="*{replacedPartList[__${stat.index}__].partSerialNo}" th:field="*{replacedPartList[__${stat.index}__].partSerialNo}"></td>
-                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].quantity}" th:field="*{replacedPartList[__${stat.index}__].quantity}"></td>
-                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].unitPrice}" th:field="*{replacedPartList[__${stat.index}__].unitPrice}"></td>
-                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].totalPrice}" th:field="*{replacedPartList[__${stat.index}__].totalPrice}"></td>
+                                            <td><input disabled type="text" class="form-control" th:value="*{replacedPartList[__${stat.index}__].partSerialNo}"
+                                                       th:field="*{replacedPartList[__${stat.index}__].partSerialNo}"></td>
+                                            <td><input disabled type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].quantity}"
+                                                       th:field="*{replacedPartList[__${stat.index}__].quantity}"></td>
+                                            <td><input disabled type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].unitPrice}"
+                                                       th:field="*{replacedPartList[__${stat.index}__].unitPrice}"></td>
+                                            <td><input disabled type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].totalPrice}"
+                                                       th:field="*{replacedPartList[__${stat.index}__].totalPrice}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -422,16 +426,14 @@
                             </div>
 
 
-                            <div class="form-actions">
-                                <button type="submit" name="action" value="update" class="btn blue">
-                                    <i class="fa fa-check"></i> GÜNCELLE
-                                </button>
-
-
-                                <button type="submit" name="action" value="completed" class="btn yellow">
-                                    <i class="fa fa-check"></i> RAPORU MERKEZE YOLLA
-                                </button>
-
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="alert alert-info">
+                                        <strong>Dikkat!</strong> Servis formunuz şu anda merkeze iletilmiştir. Artık rapor üzerinde düzenleme işlemi yapamazsınız.
+                                    </div>
+                                </div>
+                                <div class="col-md-3"></div>
                             </div>
                         </div>
                     </form>

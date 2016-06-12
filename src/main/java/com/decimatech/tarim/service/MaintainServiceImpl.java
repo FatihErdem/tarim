@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.extras.springsecurity4.dialect.processor.AuthenticationAttrProcessor;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,12 +30,12 @@ public class MaintainServiceImpl implements MaintainService {
     }
 
     @Override
-    public void firstCreate(Long demandId, Long vendorId) {
+    public Maintain firstCreate(Long demandId, Long vendorId) {
 
         Maintain maintain = new Maintain();
         maintain.setDemandId(demandId);
         maintain.setVendorId(vendorId);
-        maintainRepository.save(maintain);
+        return maintainRepository.save(maintain);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class MaintainServiceImpl implements MaintainService {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
         if (isAdmin) {
-           return maintainRepository.findAll();
+            return maintainRepository.findAll();
         } else {
             Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
             return maintainRepository.findByVendorId(vendor.getVendorId());
