@@ -20,7 +20,7 @@ public class AdminController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getAdminCreateForm(@ModelAttribute Admin admin){
-        return "adminCreateForm";
+        return "admin/adminCreateForm";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
