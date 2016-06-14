@@ -411,32 +411,67 @@
                                         <tbody>
                                         <tr th:each="replacedPart, stat : *{replacedPartList}">
                                             <td th:text="${__${stat.index+1}__}"></td>
-                                            <td><input type="text" class="form-control" th:value="*{replacedPartList[__${stat.index}__].partSerialNo}" th:field="*{replacedPartList[__${stat.index}__].partSerialNo}"></td>
-                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].quantity}" th:field="*{replacedPartList[__${stat.index}__].quantity}"></td>
-                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].unitPrice}" th:field="*{replacedPartList[__${stat.index}__].unitPrice}"></td>
-                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].totalPrice}" th:field="*{replacedPartList[__${stat.index}__].totalPrice}"></td>
+                                            <td><input type="text" class="form-control" th:value="*{replacedPartList[__${stat.index}__].partSerialNo}"
+                                                       th:field="*{replacedPartList[__${stat.index}__].partSerialNo}"></td>
+                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].quantity}"
+                                                       th:field="*{replacedPartList[__${stat.index}__].quantity}"></td>
+                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].unitPrice}"
+                                                       th:field="*{replacedPartList[__${stat.index}__].unitPrice}"></td>
+                                            <td><input type="number" class="form-control" th:value="*{replacedPartList[__${stat.index}__].totalPrice}"
+                                                       th:field="*{replacedPartList[__${stat.index}__].totalPrice}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-
                             <div class="form-actions">
-                                <button type="submit" name="action" value="update" class="btn blue">
-                                    <i class="fa fa-check"></i> GÜNCELLE
+                                <a th:href="@{/maintains}" type="button" class="btn red">
+                                    <i class="fa fa-times"></i> İPTAL ET
+                                </a>
+
+                                <button type="submit" style="margin-left: 50px" name="action" value="update" class="btn blue">
+                                    <i class="fa fa-check"></i> RAPORU GÜNCELLE
                                 </button>
 
-
-                                <button type="submit" name="action" value="completed" class="btn yellow">
-                                    <i class="fa fa-check"></i> RAPORU MERKEZE YOLLA
+                                <button type="button" class="btn yellow" style="margin-left: 50px" data-toggle="modal" data-target="#myModal">
+                                    <i class="fa fa-info"></i> RAPORU MERKEZE YOLLA
                                 </button>
+                            </div>
 
+
+                            <!-- MODAL -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel" style="text-align: center"><b>Dikkat</b></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4>Raporu merkeze yolladıktan sonra rapor üzerinde herhangi bir düzenleme işlemi yapamayacaksınız. <br><br>
+                                                Eğer raporunuz merkez tarafından uygun görülürse onaylanacaktır ve işlem tamamlanacaktır.<br><br>
+                                                Merkez raporunuzda hata görürse rapor size tekrar dönecek ve düzenleme işlemi yapmanız gerekecektir. <br><br>
+                                                Devam etmek istiyor musunuz?
+                                            </h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn red" data-dismiss="modal">
+                                                <i class="fa fa-times"></i> İPTAL ET
+                                            </button>
+                                            <button type="submit" name="action" value="completed"  class="btn yellow">
+                                                <i class="fa fa-info"></i> SERVİS İŞLEMİ İÇİN KABUL ET
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 </th:block>

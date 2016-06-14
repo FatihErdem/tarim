@@ -181,8 +181,8 @@ public class MaintainController {
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=completed")
     public String completeMaintainForm(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
 
-        Maintain maintain1 = maintainService.findOne(id);
-        Demand demand = demandService.findOne(maintain1.getDemandId());
+        Maintain maintain = maintainService.findOne(id);
+        Demand demand = demandService.findOne(maintain.getDemandId());
         City demandCity = cityService.getCityById(demand.getCustomerCity());
         District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -210,8 +210,7 @@ public class MaintainController {
 
             demand.setCompleted();
             demandService.updateDemand(demand);
-
-            return "maintainCompletedForm";
+            return "redirect:/maintains/details/" + id;
         }
     }
 
