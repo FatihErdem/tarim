@@ -157,14 +157,56 @@
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" name="action" value="save" class="btn blue">
-                                <i class="fa fa-check"></i> TALEBİ GÜNCELLE</button>
+                            <a th:href="@{/demands}" type="button" class="btn red">
+                                <i class="fa fa-times"></i> İPTAL ET
+                            </a>
 
-                            <button type="submit" name="action" value="openmaintain" class="btn yellow">
-                                <i class="fa fa-check"></i> SERVİSE ÇEVİR</button>
+                            <button type="submit" style="margin-left: 50px" name="action" value="save" class="btn blue">
+                                <i class="fa fa-check"></i> TALEBİ GÜNCELLE
+                            </button>
+
+                            <button type="button" class="btn yellow" style="margin-left: 50px" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-info"></i> SERVİS İŞLEMİ İÇİN KABUL ET
+                            </button>
                         </div>
+
+
+                        <!-- MODAL -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel" style="text-align: center"><b>Dikkat</b></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>Eğer talebi servis işlemi için kabul ederseniz o andan sonra talep bilgilerini güncelleyemeceksiniz.
+                                            Kabul edilen servisleri sol menüdeki "SERVİSLER" kısmından görebilirsiniz.<br><br>
+                                            Devam etmek istiyor musunuz?
+                                        </h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn red" data-dismiss="modal">
+                                            <i class="fa fa-times"></i> İPTAL ET
+                                        </button>
+                                        <button type="submit" name="action" value="openmaintain" class="btn yellow">
+                                            <i class="fa fa-info"></i> SERVİS İŞLEMİ İÇİN KABUL ET
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
+
+
                     <!-- END FORM-->
+                    <th:block th:if="${serviceOpened != null}">
+                        <div class="alert alert-info">
+                            <p th:text="${serviceOpened}"></p>
+                        </div>
+                    </th:block>
+
                 </div>
             </div>
         </div>
