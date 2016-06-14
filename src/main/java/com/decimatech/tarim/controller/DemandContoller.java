@@ -151,10 +151,27 @@ public class DemandContoller {
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @demandRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=save")
-    public String updateDemand(@PathVariable("id") Long id, @Valid @ModelAttribute Demand demand, BindingResult result) {
-        if (result.hasErrors()) {
-            return "demandUpdateForm";
+    public String updateDemand(@PathVariable("id") Long id, @Valid @ModelAttribute Demand demand, BindingResult result, Model model, Authentication authentication) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
+        List<Demand> demands = demandService.getAllDemands(authentication);
 
+        List<Vendor> vendors = new ArrayList<>();
+        if (isVendor) {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            vendors.add(vendor);
+        } else {
+            vendors = vendorService.getAllVendors();
+        }
+
+        if (result.hasErrors()) {
+            City demandCity = cityService.getCityById(demand.getCustomerCity());
+            District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
+            demand.setDemandId(id);
+            model.addAttribute("city", demandCity);
+            model.addAttribute("district", demandDistrict);
+            model.addAttribute("vendors", vendors);
+            return "demandUpdateForm";
         } else {
             demand.setDemandId(id);
             demandService.updateDemand(demand);
@@ -178,23 +195,15 @@ public class DemandContoller {
         }
 
 
-        City demandCity = cityService.getCityById(demand.getCustomerCity());
-        District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
-
-        model.addAttribute("vendors", vendors);
-        model.addAttribute("city", demandCity);
-        model.addAttribute("district", demandDistrict);
-
         Maintain maintain = maintainService.firstCreate(demandId, demand.getVendorId());
-
         replacedPartService.createAllReplacedParts(maintain.getMaintainId());
 
         demand.setMaintainId(maintain.getMaintainId());
         demand.setInProgress();
         demand.setDemandId(demandId);
         demandService.updateDemand(demand);
-        model.addAttribute("serviceOpened", "Servis Başarıyla Oluşturuldu. Durumunu Servisler kısmından takip edebilirsiniz.");
-        return "demandInProgressForm";
+
+        return "redirect:/demands/details/" + demandId;
     }
 
 }
