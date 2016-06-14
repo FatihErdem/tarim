@@ -75,7 +75,6 @@ public class DemandContoller {
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
-        List<Demand> demands = demandService.getAllDemands(authentication);
 
         List<Vendor> vendors = new ArrayList<>();
         if (isVendor) {
@@ -154,7 +153,6 @@ public class DemandContoller {
     public String updateDemand(@PathVariable("id") Long id, @Valid @ModelAttribute Demand demand, BindingResult result, Model model, Authentication authentication) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
-        List<Demand> demands = demandService.getAllDemands(authentication);
 
         List<Vendor> vendors = new ArrayList<>();
         if (isVendor) {

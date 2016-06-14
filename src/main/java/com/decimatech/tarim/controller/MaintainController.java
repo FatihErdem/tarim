@@ -65,27 +65,6 @@ public class MaintainController {
         return "maintainList";
     }
 
-//    @RequestMapping(value = "/create", method = RequestMethod.GET)
-//    public String getCreateForm(@ModelAttribute Maintain maintain, Model model) {
-//        List<Machine> machines = machineRepository.findAll();
-//        model.addAttribute("machines", machines);
-//
-//        return "maintainForm";
-//    }
-
-//    @RequestMapping(value = "/create", method = RequestMethod.POST)
-//    public String createMaintain(@Valid @ModelAttribute Maintain maintain, BindingResult result, Model model) {
-//
-//        if (result.hasErrors()) {
-//            List<Machine> machines = machineRepository.findAll();
-//            model.addAttribute("machines", machines);
-//            return "maintainForm";
-//        } else {
-//            maintainService.createMaintain(maintain);
-//            return "redirect:/";
-//        }
-//    }
-
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
     public String getMaintainDetails(@PathVariable("id") Long id, Model model, Authentication authentication) {
@@ -181,8 +160,8 @@ public class MaintainController {
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=completed")
     public String completeMaintainForm(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
 
-        Maintain maintain = maintainService.findOne(id);
-        Demand demand = demandService.findOne(maintain.getDemandId());
+        Maintain maintain1 = maintainService.findOne(id);
+        Demand demand = demandService.findOne(maintain1.getDemandId());
         City demandCity = cityService.getCityById(demand.getCustomerCity());
         District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -207,6 +186,14 @@ public class MaintainController {
             return "maintainUpdateForm";
         } else {
 
+            List<ReplacedPart> replacedPartList = formDto.getReplacedPartList();
+            replacedPartService.updateAllReplacedParts(replacedPartList, maintain1.getMaintainId());
+
+            Maintain maintain = formDto.getMaintain();
+            maintain.setDemandId(maintain1.getDemandId());
+            maintain.setVendorId(maintain1.getVendorId());
+            maintain.setMaintainId(id);
+            maintainService.updateMaintain(maintain);
 
             demand.setCompleted();
             demandService.updateDemand(demand);
