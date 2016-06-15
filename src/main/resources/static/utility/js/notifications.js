@@ -2,24 +2,6 @@
  * Created by Fatih on 24.5.2016.
  */
 $(document).ready(function () {
-
-    var table = $('#table').DataTable({
-        language: {
-            search: "Tabloda Ara: ",
-            lengthMenu: "_MENU_ Kayıt Göster",
-            zeroRecords: "Sonuç Bulunamadı",
-            emptyTable: "Veri Yok",
-            "sInfo": "  _TOTAL_ Kayıttan _START_ - _END_ Arası Kayıtlar Gösteriliyor",
-            paginate: {
-                first: "İlk",
-                previous: "Önceki",
-                next: "Sonraki",
-                last: "Son"
-            }
-        }
-    });
-
-
     (function request() {
         $.ajax({
             url: "http://localhost:8080/api/notifications",
@@ -29,22 +11,13 @@ $(document).ready(function () {
                 document.getElementById("notificationCount2").innerHTML = data.unreadCount;
                 document.getElementById("notificationCount3").innerHTML = data.unreadCount;
 
-                // var talepCount = document.getElementById("notificationCount3");
-                //
-                // if(data.unreadCount == 0){
-                //     var talepCount = document.getElementById("notificationCount3");
-                //     talepCount.className += " hidden"
-                // }else{
-                //     talepCount.className -= " hidden"
-                //
-                // }
-
                 for (var counter = 0; counter < data.details.length; counter++) {
                     var div = document.createElement('div');
-
+                    var link = data.details[counter].demandId;
+                    var url = "/demands/details/" + link;
                     var uniqueNotification =
                         "<li>" +
-                        "<a href=\"/demands\">" +
+                        "<a href=" + url + ">" +
                         "<span class=\"time\">" + data.details[counter].createdAt + "</span>" +
                         "<span class=\"details\">" +
                         "<span class=\"label label-md label-icon label-success\">" +
@@ -52,8 +25,6 @@ $(document).ready(function () {
                         "</span><b>" + "#" + data.details[counter].demandId + "</b> no\'lu talep geldi" + "</span>" +
                         "</a>" +
                         "</li>";
-
-
                     div.innerHTML = uniqueNotification;
                     var element = div.firstChild;
                     document.getElementById('notificationMenu').appendChild(element);
