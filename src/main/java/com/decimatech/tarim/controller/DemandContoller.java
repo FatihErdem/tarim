@@ -130,7 +130,7 @@ public class DemandContoller {
         City demandCity = cityService.getCityById(demand.getCustomerCity());
         District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
 
-        if (demand.isUnread()){
+        if (demand.isUnread()) {
             demandService.setDemandRead(demand);
         }
 
@@ -139,13 +139,34 @@ public class DemandContoller {
         model.addAttribute("city", demandCity);
         model.addAttribute("district", demandDistrict);
 
-        if (!Objects.equals(demand.getDemandState(), "OPEN")){
-            return "demandInProgressForm";
-        }else{
-            return "demandUpdateForm";
+        if (!isVendor) {
+            if (Objects.equals(demand.getDemandState(), "OPEN")) {
+                model.addAttribute("message", "Talep servise iletilmiştir. Servis kabul ya da reddettiğinde tarafınıza bildirim gelecektir.");
+                return "demandInProgressForm";
+            } else if (Objects.equals(demand.getDemandState(), "IN_PROGRESS")) {
+                model.addAttribute("message", "Bu talep servis için kabul edilmiştir. Servis durumunu SERVİSLER menüsü altından takip edebilirsiniz.");
+                return "demandInProgressForm";
+            } else if (Objects.equals(demand.getDemandState(), "COMPLETED")){
+                model.addAttribute("message", "Bu talebin servis işlemi tamamlanmıştır. Servis raporunu görmek için SERVİSLER menüsünü kullanabilirsiniz.");
+                return "demandInProgressForm";
+            }
+
+        } else {
+            if (Objects.equals(demand.getDemandState(), "OPEN")) {
+                model.addAttribute("message", "Bu talebi sol menüdeki 'SERVİSLER' kısmından servis haline getirebilirsiniz.");
+                return "demandInProgressForm";
+            } else if (Objects.equals(demand.getDemandState(), "IN_PROGRESS")) {
+                model.addAttribute("message", "Bu talep servis için kabul edilmiştir. Servis işlemlerini SERVİSLER menüsü altından yapabilirsiniz.");
+                return "demandInProgressForm";
+            } else if (Objects.equals(demand.getDemandState(), "COMPLETED")){
+                model.addAttribute("message", "Bu talebin servis işlemi tamamlanmıştır. Servis raporu merkeze iletilmiştir.");
+                return "demandInProgressForm";
+            }
+            else {
+                return "demandUpdateForm";
+            }
         }
-
-
+        return "demandInProgressForm";
     }
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @demandRepository.findOne(#id).vendorId")

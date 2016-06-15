@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <th:block th:fragment="content">
     <div class="page-content-wrapper">
         <div class="page-content">
@@ -176,8 +176,19 @@
                                         <h4 class="modal-title" id="myModalLabel" style="text-align: center"><b>Dikkat</b></h4>
                                     </div>
                                     <div class="modal-body">
-                                        <h4>Eklediğiniz talep merkez tarafından görülecektir.<br><br>
-                                        Devam etmek istiyor musunuz?</h4>
+                                        <div sec:authorize="hasAuthority('ADMIN')">
+                                            <h4>
+                                                Talebiniz seçmiş olduğunuz bayiye iletilecektir.<br><br>
+                                                Bayinin servisi kabul ya da reddetmesi durumunda tarafınıza bildirim gelecektir.<br><br>
+                                                Talebi servise yollamak istiyor musunuz?
+                                            </h4>
+                                        </div>
+                                        <div sec:authorize="hasAuthority('VENDOR')">
+                                            <h4>
+                                                Talebi açtıktan sonra servis için kabul etme işlemini sol taraftaki menüden "SERVİSLER" kısmından yapabilirsiniz.<br><br>
+                                                Talebi açmak istediğinize emin misiniz?
+                                            </h4>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn red" data-dismiss="modal">
