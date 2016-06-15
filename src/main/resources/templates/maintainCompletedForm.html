@@ -260,7 +260,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label">Başlama Zamanı</label>
                                         <div class="input-group">
@@ -277,7 +277,7 @@
                                         <p th:errors="*{maintain.startTime}"></p>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label">Bitiş Zamanı</label>
                                         <div class="input-group">
@@ -294,6 +294,19 @@
                                         <p th:errors="*{maintain.finishTime}"></p>
                                     </div>
                                 </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Harcanan Toplam Zaman</label>
+                                        <input disabled type="number" id="totalTime" class="form-control"
+                                               th:value="*{maintain.totalTime}" th:field="*{maintain.totalTime}">
+
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('maintain.totalTime')}" class="alert alert-danger">
+                                        <p th:errors="*{maintain.totalTime}"></p>
+                                    </div>
+                                </div>
+
 
                             </div>
 

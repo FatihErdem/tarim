@@ -1,6 +1,7 @@
 package com.decimatech.tarim.controller;
 
 
+import com.decimatech.tarim.controller.validation.MaintainFormValidator;
 import com.decimatech.tarim.model.domain.MaintainTable;
 import com.decimatech.tarim.model.dto.MaintainFormDto;
 import com.decimatech.tarim.model.entity.*;
@@ -15,10 +16,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -31,6 +30,9 @@ import java.util.Objects;
 public class MaintainController {
 
     public final static int REPLACED_PART_COUNT = 7;
+
+    @Autowired
+    private MaintainFormValidator formValidator;
 
     @Autowired
     private MachineRepository machineRepository;
@@ -56,10 +58,16 @@ public class MaintainController {
     @Autowired
     private ReplacedPartService replacedPartService;
 
+    @InitBinder("form")
+    protected void initBinder(final WebDataBinder binder) {
+        binder.setValidator(this.formValidator);
+    }
+
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String getMaintainList(Authentication authentication, Model model) {
 
-       List<MaintainTable> maintainTableList = maintainService.getMaintainTable(authentication);
+        List<MaintainTable> maintainTableList = maintainService.getMaintainTable(authentication);
 
         model.addAttribute("maintains", maintainTableList);
         return "maintainList";
@@ -114,7 +122,7 @@ public class MaintainController {
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=update")
-    public String updateMaintain(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
+    public String updateMaintain(@ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
 
 
         Maintain maintain1 = maintainService.findOne(id);
@@ -179,6 +187,10 @@ public class MaintainController {
         }
 
         if (result.hasErrors()) {
+            formDto.setDemand(demand);
+            formDto.setMaintain(formDto.getMaintain());
+            formDto.getMaintain().setMaintainId(id);
+            model.addAttribute("form", formDto);
             model.addAttribute("machines", machines);
             model.addAttribute("city", demandCity);
             model.addAttribute("district", demandDistrict);
