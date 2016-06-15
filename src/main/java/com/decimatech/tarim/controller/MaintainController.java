@@ -112,17 +112,42 @@ public class MaintainController {
         model.addAttribute("district", demandDistrict);
         model.addAttribute("vendors", vendors);
 
-        if (Objects.equals(demand.getDemandState(), "COMPLETED")) {
-            return "maintainCompletedForm";
+        if (!isVendor) {
+            if (Objects.equals(demand.getDemandState(), "IN_PROGRESS")) {
+                model.addAttribute("message", "Şu anda servis aşamasındadır. Bayi servisi tamamlandığında tarafınıza iletilecektir.");
+                return "maintainStaticForm";
+            } else if (Objects.equals(demand.getDemandState(), "COMPLETED")) {
+                model.addAttribute("message", "Bayi servisi tamamlamıştır. Servis raporunu onaylayabilir ya da reddedebilirsiniz.");
+                return "maintainStaticForm";
+            } else if (Objects.equals(demand.getDemandState(), "REJECTED")) {
+                model.addAttribute("message", "Servis raporu güncellenmek üzere bayiye yollanmıştır.");
+                return "maintainStaticForm";
+            } else if (Objects.equals(demand.getDemandState(), "APPROVED")) {
+                model.addAttribute("message", "Servis raporunuz merkez tarafından onaylanıp cari hesaba geçmiştir.");
+                return "maintainStaticForm";
+            }
         } else {
-
-            return "maintainUpdateForm";
+            if (Objects.equals(demand.getDemandState(), "IN_PROGRESS")) {
+                model.addAttribute("message", "Raporu düzenleyip merkeze yollayabilirsiniz.");
+                return "maintainUpdateForm";
+            } else if (Objects.equals(demand.getDemandState(), "COMPLETED")) {
+                model.addAttribute("message", "Raporunuz merkeze iletilmiştir. Merkez raporunuzu inceledikten sonra onaylayacak ya da reddedecektir.");
+                return "maintainStaticForm";
+            } else if (Objects.equals(demand.getDemandState(), "REJECTED")) {
+                model.addAttribute("message", "Raporunuz merkez tarafından reddedilmiştir. Raporunuzu güncelleyip geri yollamanız gerekmektedir.");
+                return "maintainUpdateForm";
+            } else if (Objects.equals(demand.getDemandState(), "APPROVED")) {
+                model.addAttribute("message", "Raporunuz merkez tarafından onaylanmıştır ve cari hesaba aktarılmıştır.");
+                return "maintainStaticForm";
+            }
         }
+        return "maintainStaticForm";
     }
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=update")
-    public String updateMaintain(@ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
+    public String updateMaintain(@ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication
+            authentication) {
 
 
         Maintain maintain1 = maintainService.findOne(id);
@@ -166,7 +191,9 @@ public class MaintainController {
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=completed")
-    public String completeMaintainForm(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
+    public String completeMaintainForm(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model
+            model, Authentication
+                                               authentication) {
 
         Maintain maintain1 = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain1.getDemandId());
@@ -212,5 +239,30 @@ public class MaintainController {
             return "redirect:/maintains/details/" + id;
         }
     }
+
+    @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
+    @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=rejected")
+    public String rejectMaintainForm(@ModelAttribute("form") MaintainFormDto formDto, @PathVariable("id") Long id) {
+
+        Maintain maintain1 = maintainService.findOne(id);
+        Demand demand = demandService.findOne(maintain1.getDemandId());
+        demand.setDemandState("REJECTED");
+        demandService.updateDemand(demand);
+
+        return "redirect:/maintains/details/" + id;
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
+    @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=approved")
+    public String approveMaintainForm(@ModelAttribute("form") MaintainFormDto formDto, @PathVariable("id") Long id) {
+
+        Maintain maintain1 = maintainService.findOne(id);
+        Demand demand = demandService.findOne(maintain1.getDemandId());
+        demand.setDemandState("APPROVED");
+        demandService.updateDemand(demand);
+
+        return "redirect:/maintains/details/" + id;
+    }
+
 
 }

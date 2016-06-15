@@ -471,8 +471,8 @@
                                             <button type="button" class="btn red" data-dismiss="modal">
                                                 <i class="fa fa-times"></i> İPTAL ET
                                             </button>
-                                            <button type="submit" name="action" value="completed"  class="btn yellow">
-                                                <i class="fa fa-info"></i> SERVİS İŞLEMİ İÇİN KABUL ET
+                                            <button type="submit" name="action" value="completed" class="btn yellow">
+                                                <i class="fa fa-info"></i> SERVİS RAPORUNU MERKEZE YOLLA
                                             </button>
                                         </div>
                                     </div>
@@ -480,7 +480,19 @@
                             </div>
                         </div>
                     </form>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="alert alert-info">
+                                <h4>
+                                    <strong>Dikkat!</strong> <span th:text="${message}"></span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
                 </div>
+
                 </form>
             </div>
         </div>

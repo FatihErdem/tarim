@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<th:block th:fragment="content">
+<div th:fragment="content">
     <div class="page-content-wrapper">
         <div class="page-content">
 
@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="portlet-body form">
-                    <form class="horizontal-form" id="myForm" autocomplete="off" th:object="${form}">
+                    <form class="horizontal-form" id="myForm" th:action="@{/maintains/details/__*{maintain.maintainId}__}" autocomplete="off" th:object="${form}" method="post">
                         <div class="form-body">
                             <h3 class="form-section">Müşteri Bilgileri</h3>
 
@@ -438,12 +438,80 @@
                                 </div>
                             </div>
 
+                            <th:block th:if="*{demand.demandState} == 'COMPLETED'" sec:authorize="hasAuthority('ADMIN')">
+                                <div class="form-actions">
+                                    <button type="button" data-toggle="modal" data-target="#myModalReject" class="btn red">
+                                        <i class="fa fa-times"></i> SERVİS RAPORUNU REDDET
+                                    </button>
 
-                            <div class="row">
+                                    <button type="button" class="btn green" style="margin-left: 50px" data-toggle="modal" data-target="#myModalApproved">
+                                        <i class="fa fa-check"></i> SERVİS RAPORUNU KABUL ET
+                                    </button>
+                                </div>
+
+
+                                <!-- MODAL_REJECT -->
+                                <div class="modal fade" id="myModalReject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel" style="text-align: center"><b>Dikkat</b></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>
+                                                    Talebi reddederseniz bayiye raporu düzenlemesi için bildirim gidecektir.<br><br>
+                                                    Bayi raporu tekrar düzenledikten sonra tarafınıza iletecektir.<br><br>
+                                                    Servis raporunu reddetmek istediğinize emin misiniz?
+                                                </h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn red" data-dismiss="modal">
+                                                    <i class="fa fa-times"></i> GERİ GEL
+                                                </button>
+                                                <button type="submit" name="action" value="rejected" class="btn blue">
+                                                    <i class="fa fa-check"></i> SERVİS RAPORUNU REDDET
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL_APPROVED -->
+                                <div class="modal fade" id="myModalApproved" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel2" style="text-align: center"><b>Dikkat</b></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>
+                                                    Servis raporunu onaylamak üzeresiniz<br><br>
+                                                    Raporu onayladıktan sonra cari hesaba geçecek ve herhangi bir güncelleme işlemi yapamayacaksınız.<br><br>
+                                                    Raporu onaylamak istiyor musunuz?
+                                                </h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn red" data-dismiss="modal">
+                                                    <i class="fa fa-times"></i> GERİ GEL
+                                                </button>
+                                                <button type="submit" name="action" value="approved" class="btn green">
+                                                    <i class="fa fa-check"></i> SERVİS RAPORUNU ONAYLA
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+
+                            <div class="row" style="margin-top: 20px">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
                                     <div class="alert alert-info">
-                                        <strong>Dikkat!</strong> Servis formunuz şu anda merkeze iletilmiştir. Artık rapor üzerinde düzenleme işlemi yapamazsınız.
+                                        <h4>
+                                            <strong>Dikkat!</strong> <span th:text="${message}"></span>
+                                        </h4>
                                     </div>
                                 </div>
                                 <div class="col-md-3"></div>
@@ -454,4 +522,5 @@
             </div>
         </div>
     </div>
+</div>
 </th:block>

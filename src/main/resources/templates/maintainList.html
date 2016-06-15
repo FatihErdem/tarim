@@ -32,8 +32,9 @@
                                     <span th:case="OPEN">Açık</span>
                                     <span th:case="IN_PROGRESS">Servis Aşamasında</span>
                                     <span th:case="COMPLETED">Tamamlandı</span>
-                                    <span th:case="REJECTED">Reddedildi</span>
+                                    <span th:case="REJECTED">Merkez Tarafından Reddedildi</span>
                                     <span th:case="UNCOMPLETED">Yarım Kaldı</span>
+                                    <span th:case="APPROVED">Merkez Tarafından Onaylandı</span>
                                 </td>
                                 <td th:text="${maintain.vendorName}">0</td>
                                 <td th:text="${maintain.city}">0</td>
