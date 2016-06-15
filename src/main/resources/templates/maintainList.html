@@ -10,13 +10,13 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div id="sample_3_wrapper" class="dataTables_wrapper no-footer">
-                        <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="myTable" role="grid"
-                               aria-describedby="sample_3_info">
+                    <div class="dataTables_wrapper no-footer">
+                        <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="myTable" role="grid">
                             <thead>
                             <tr>
                                 <th>Servis ID</th>
                                 <th>Talep ID</th>
+                                <th>Talep Durumu</th>
                                 <th>Bayi Adı</th>
                                 <th>Servis İl</th>
                                 <th>Servis İlçe</th>
@@ -28,6 +28,13 @@
                             <tr th:each="maintain : ${maintains}">
                                 <td th:text="${maintain.maintainId}">0</td>
                                 <td th:text="${maintain.demandId}">0</td>
+                                <td th:switch="${maintain.demandState}">
+                                    <span th:case="OPEN">Açık</span>
+                                    <span th:case="IN_PROGRESS">Servis Aşamasında</span>
+                                    <span th:case="COMPLETED">Tamamlandı</span>
+                                    <span th:case="REJECTED">Reddedildi</span>
+                                    <span th:case="UNCOMPLETED">Yarım Kaldı</span>
+                                </td>
                                 <td th:text="${maintain.vendorName}">0</td>
                                 <td th:text="${maintain.city}">0</td>
                                 <td th:text="${maintain.district}">0</td>

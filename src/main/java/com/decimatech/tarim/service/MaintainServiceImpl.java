@@ -101,6 +101,7 @@ public class MaintainServiceImpl implements MaintainService {
                 if (Objects.equals(demand.getMaintainId(), maintain.getMaintainId())){
                     maintainTableRow.setMaintainId(maintain.getMaintainId());
                     maintainTableRow.setDemandId(maintain.getDemandId());
+                    maintainTableRow.setDemandState(demand.getDemandState());
 
                     Vendor vendor = vendorService.getVendorByVendorId(maintain.getVendorId());
                     String vendorName = vendor.getVendorName();

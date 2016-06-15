@@ -14,6 +14,16 @@ public class MaintainTable {
 
     private String customerName;
 
+    private String demandState;
+
+    public String getDemandState() {
+        return demandState;
+    }
+
+    public void setDemandState(String demandState) {
+        this.demandState = demandState;
+    }
+
     public Long getMaintainId() {
         return maintainId;
     }
