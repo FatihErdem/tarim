@@ -63,21 +63,29 @@ public class PartController {
         for (Part part : parts) {
             PartTable partTable = new PartTable();
 
-            for (Machine machine : machines) {
-                if (part.getMachineId() == 0) {
-                    partTable.setMachineName("YOK");
-                    partTable.setPartId(part.getPartId());
-                    partTable.setPartName(part.getPartName());
-                    partTable.setPrice(part.getPrice());
-                    break;
-                } else if (Objects.equals(part.getMachineId(), machine.getMachineId())) {
-                    partTable.setMachineName(machine.getMachineName());
-                    partTable.setPartId(part.getPartId());
-                    partTable.setPartName(part.getPartName());
-                    partTable.setPrice(part.getPrice());
-                    break;
+            if (machines.size() == 0) {
+                partTable.setMachineName("YOK");
+                partTable.setPartId(part.getPartId());
+                partTable.setPartName(part.getPartName());
+                partTable.setPrice(part.getPrice());
+            } else {
+                for (Machine machine : machines) {
+                    if (Objects.equals(part.getMachineId(), 0L)) {
+                        partTable.setMachineName("YOK");
+                        partTable.setPartId(part.getPartId());
+                        partTable.setPartName(part.getPartName());
+                        partTable.setPrice(part.getPrice());
+                        break;
+                    } else if (Objects.equals(part.getMachineId(), machine.getMachineId())) {
+                        partTable.setMachineName(machine.getMachineName());
+                        partTable.setPartId(part.getPartId());
+                        partTable.setPartName(part.getPartName());
+                        partTable.setPrice(part.getPrice());
+                        break;
+                    }
                 }
             }
+
             partTables.add(partTable);
         }
 
