@@ -1,3 +1,9 @@
 .label-success {
     background-color: #5cb85c;
 }
+
+.label.label-md {
+    min-width: 225px ;
+    min-height: 22px;
+    display: inline-block;
+}
