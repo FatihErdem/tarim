@@ -31,7 +31,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public List<Vendor> getAllVendors() {
-        return vendorRepository.findAll();
+        return vendorRepository.findAllByOrderByVendorIdAsc();
     }
 
     @Override

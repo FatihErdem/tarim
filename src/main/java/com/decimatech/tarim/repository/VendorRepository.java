@@ -19,5 +19,5 @@ public interface VendorRepository extends Repository<Vendor, Long> {
     Vendor findOne(Long id);
 
     @Cacheable("vendors")
-    List<Vendor> findAll();
+    List<Vendor> findAllByOrderByVendorIdAsc();
 }
