@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="content">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+
+            <div class="portlet box blue-chambray">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i> Makineler
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id="sample_3_wrapper" class="dataTables_wrapper no-footer">
+                        <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="myTable" role="grid"
+                               aria-describedby="sample_3_info">
+                            <thead>
+                            <tr>
+                                <th>Admin ID</th>
+                                <th>Admin Kullanıcı Adı</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="admin : ${admins}">
+                                <td th:text="${admin.adminId}">0</td>
+                                <td th:text="${admin.username}">Onions</td>
+                                <td>
+                                    <a th:href="@{/admins/details/__${admin.adminId}__}">Detay</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

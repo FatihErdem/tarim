@@ -23,4 +23,12 @@ public class Admin extends AbstractUser {
         list.add(simpleGrantedAuthority);
         return list;
     }
+
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
+    }
 }

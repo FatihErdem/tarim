@@ -11,4 +11,12 @@ public interface AdminService {
     List<Admin> getAllAdmins();
 
     void registerAdmin(Admin admin);
+
+    void createFirstAdmin();
+
+    boolean ifFirstAdminExist();
+
+    void updateAdmin(Admin admin);
+
+    Admin getAdminByAdminId(Long id);
 }

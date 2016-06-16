@@ -30,9 +30,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
 
                 // authentication
-                .antMatchers("/admins/create", "/assets/**", "/images/**").permitAll()
+                .antMatchers("/assets/**", "/images/**").permitAll()
                 .antMatchers("/admins/**").hasAuthority("ADMIN")
                 .antMatchers("/vendors/**").hasAuthority("ADMIN")
+                .antMatchers("/machines/**").hasAuthority("ADMIN")
+                .antMatchers("/parts/**").hasAuthority("ADMIN")
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin().loginPage("/login").failureUrl("/login?error").permitAll()

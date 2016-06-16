@@ -13,6 +13,9 @@ import java.util.List;
 @Transactional
 public class AdminServiceImpl implements AdminService {
 
+    private final static String ADMIN_USERNAME = "decimatechadmin";
+    private final static String ADMIN_PASSWORD = "hmzefsa06ar6557";
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -36,5 +39,31 @@ public class AdminServiceImpl implements AdminService {
         admin.setPassword(encodedPassword);
         adminRepository.save(admin);
 
+    }
+
+    @Override
+    public void createFirstAdmin() {
+        Admin admin = new Admin();
+        admin.setUsername(ADMIN_USERNAME);
+        admin.setPassword(passwordEncoder.encode(ADMIN_PASSWORD));
+        adminRepository.save(admin);
+    }
+
+    @Override
+    public boolean ifFirstAdminExist() {
+        Admin admin = adminRepository.getAdminByUsername("decimatechadmin");
+        return admin != null;
+    }
+
+    @Override
+    public void updateAdmin(Admin admin) {
+        final String encodedPassword = passwordEncoder.encode(admin.getPassword());
+        admin.setPassword(encodedPassword);
+        adminRepository.save(admin);
+    }
+
+    @Override
+    public Admin getAdminByAdminId(Long id) {
+        return adminRepository.findOne(id);
     }
 }
