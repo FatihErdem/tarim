@@ -123,7 +123,7 @@ public class MaintainController {
                 model.addAttribute("message", "Servis raporu güncellenmek üzere bayiye yollanmıştır.");
                 return "maintainStaticForm";
             } else if (Objects.equals(demand.getDemandState(), "APPROVED")) {
-                model.addAttribute("message", "Servis raporunuz merkez tarafından onaylanıp cari hesaba geçmiştir.");
+                model.addAttribute("message", "Servis raporu tarafınızca onaylanıp cari hesaba geçmiştir.");
                 return "maintainStaticForm";
             }
         } else {
