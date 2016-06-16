@@ -17,8 +17,11 @@ $(document).ready(function () {
                 last: "Son"
             }
         },
-        "iDisplayLength": 25,
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
-        stateSave: true
+        iDisplayLength: 25,
+        aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+        stateSave: true,
+        stateSaveParams: function (settings, data) {
+            data.search.search = "";
+        }
     });
 });
