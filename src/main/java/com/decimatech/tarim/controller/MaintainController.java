@@ -58,9 +58,6 @@ public class MaintainController {
     @Autowired
     private ReplacedPartService replacedPartService;
 
-    @Autowired
-    private UtilityService utilityService;
-
     @InitBinder("form")
     protected void initBinder(final WebDataBinder binder) {
         binder.setValidator(this.formValidator);
@@ -71,7 +68,6 @@ public class MaintainController {
     public String getMaintainList(Authentication authentication, Model model) {
 
         List<MaintainTable> maintainTableList = maintainService.getMaintainTable(authentication);
-
         model.addAttribute("maintains", maintainTableList);
         return "maintainList";
     }
@@ -83,18 +79,21 @@ public class MaintainController {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
 
-        List<Vendor> vendors = utilityService.getUserVendor(authentication);
+        List<Vendor> vendors = new ArrayList<>();
+        if (isVendor) {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            vendors.add(vendor);
+        } else {
+            vendors = vendorService.getAllVendors();
+        }
 
         List<Machine> machines = machineRepository.findAll();
         Maintain maintain = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain.getDemandId());
-
         City demandCity = cityService.getCityById(demand.getCustomerCity());
         District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
 
-
         List<ReplacedPart> replacedPartList = replacedPartRepository.findByMaintainIdOrderByReplacedPartIdAsc(maintain.getMaintainId());
-
         int eksik = REPLACED_PART_COUNT - replacedPartList.size();
 
         for (int i = 0; i < eksik; i++) {
@@ -143,8 +142,7 @@ public class MaintainController {
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=update")
-    public String updateMaintain(@ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication
-            authentication) {
+    public String updateMaintain(@ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
 
 
         Maintain maintain1 = maintainService.findOne(id);
@@ -153,7 +151,6 @@ public class MaintainController {
         District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<Machine> machines = machineRepository.findAll();
-
 
         boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
         List<Vendor> vendors = new ArrayList<>();
@@ -188,16 +185,26 @@ public class MaintainController {
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=completed")
-    public String completeMaintainForm(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
+    public String completeMaintainForm(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model
+            model, Authentication authentication) {
 
         Maintain maintain1 = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain1.getDemandId());
         City demandCity = cityService.getCityById(demand.getCustomerCity());
         District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<Machine> machines = machineRepository.findAll();
 
-        List<Vendor> vendors = utilityService.getUserVendor(authentication);
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
+
+        List<Vendor> vendors = new ArrayList<>();
+
+        if (isVendor) {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            vendors.add(vendor);
+        } else {
+            vendors = vendorService.getAllVendors();
+        }
 
         if (result.hasErrors()) {
             formDto.setDemand(demand);
