@@ -58,6 +58,9 @@ public class MaintainController {
     @Autowired
     private ReplacedPartService replacedPartService;
 
+    @Autowired
+    private UtilityService utilityService;
+
     @InitBinder("form")
     protected void initBinder(final WebDataBinder binder) {
         binder.setValidator(this.formValidator);
@@ -80,13 +83,7 @@ public class MaintainController {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
 
-        List<Vendor> vendors = new ArrayList<>();
-        if (isVendor) {
-            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
-            vendors.add(vendor);
-        } else {
-            vendors = vendorService.getAllVendors();
-        }
+        List<Vendor> vendors = utilityService.getUserVendor(authentication);
 
         List<Machine> machines = machineRepository.findAll();
         Maintain maintain = maintainService.findOne(id);
@@ -191,9 +188,7 @@ public class MaintainController {
 
     @PreAuthorize("hasAuthority('ADMIN') OR  @vendorService.getVendorByUsername(authentication.name).vendorId == @maintainRepository.findOne(#id).vendorId")
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST, params = "action=completed")
-    public String completeMaintainForm(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model
-            model, Authentication
-                                               authentication) {
+    public String completeMaintainForm(@Valid @ModelAttribute("form") MaintainFormDto formDto, BindingResult result, @PathVariable("id") Long id, Model model, Authentication authentication) {
 
         Maintain maintain1 = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain1.getDemandId());
@@ -202,16 +197,7 @@ public class MaintainController {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<Machine> machines = machineRepository.findAll();
 
-
-        boolean isVendor = authorities.contains(new SimpleGrantedAuthority("VENDOR"));
-        List<Vendor> vendors = new ArrayList<>();
-
-        if (isVendor) {
-            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
-            vendors.add(vendor);
-        } else {
-            vendors = vendorService.getAllVendors();
-        }
+        List<Vendor> vendors = utilityService.getUserVendor(authentication);
 
         if (result.hasErrors()) {
             formDto.setDemand(demand);
