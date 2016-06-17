@@ -5,9 +5,12 @@ import com.decimatech.tarim.model.entity.District;
 import com.decimatech.tarim.model.entity.Vendor;
 import com.decimatech.tarim.service.CityService;
 import com.decimatech.tarim.service.DistrictService;
+import com.decimatech.tarim.service.UtilityService;
 import com.decimatech.tarim.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +37,9 @@ public class VendorController {
 
     @Autowired
     private VendorService vendorService;
+
+    @Autowired
+    private UtilityService utilityService;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getVendorCreateForm(@ModelAttribute Vendor vendor) {
@@ -101,6 +108,9 @@ public class VendorController {
             }
 
         } else {
+            // Sifre degisince vendor force logout oluyor
+            utilityService.expireSessionWithUserId(id);
+
             vendor.setVendorId(id);
             vendorService.updateVendor(vendor);
             return "redirect:/vendors";

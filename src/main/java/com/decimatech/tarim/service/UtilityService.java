@@ -9,4 +9,6 @@ public interface UtilityService {
 
     List<Vendor> getUserVendor(Authentication authentication);
 
+    void expireSessionWithUserId(Long id);
+
 }
