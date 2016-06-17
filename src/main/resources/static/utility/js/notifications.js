@@ -20,7 +20,7 @@ $(document).ready(function () {
                         "<a href=" + url + ">" +
                         "<span class=\"time\">" + data.details[counter].createdAt + "</span>" +
                         "<span class=\"details\">" +
-                        "<span class=\"label label-md label-icon label-success\">" +
+                        "<span class=\"label label-sm label-icon label-success\">" +
                         "<i class=\"fa fa-plus\"></i>" +
                         "</span><b>" + "#" + data.details[counter].demandId + "</b> no\'lu talep geldi" + "</span>" +
                         "</a>" +
