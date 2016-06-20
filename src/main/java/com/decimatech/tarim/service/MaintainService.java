@@ -20,4 +20,6 @@ public interface MaintainService {
     Maintain updateMaintain(Maintain maintain);
 
     List<MaintainTable> getMaintainTable(Authentication authentication);
+
+    Maintain getMaintainByDemandId(Long id);
 }

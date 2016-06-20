@@ -79,4 +79,10 @@ public class UtilityServiceImpl implements UtilityService {
         }
     }
 
+    @Override
+    public boolean isVendor(Authentication authentication) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        return authorities.contains(new SimpleGrantedAuthority("VENDOR"));
+    }
+
 }

@@ -18,5 +18,4 @@ public interface DemandService {
 
     Demand findOne(Long id);
 
-    void setDemandRead(Demand demand);
 }

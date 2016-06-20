@@ -11,7 +11,9 @@ public interface DemandRepository extends Repository<Demand, Long> {
 
     List<Demand> findByVendorIdAndDeletedFalse(Long vendorId);
 
-    List<Demand> findByVendorIdAndDeletedFalseAndUnreadTrue(Long vendorId);
+    List<Demand> findByVendorIdAndDeletedFalseAndUnreadVendorTrue(Long vendorId);
+
+    List<Demand> findByUnreadAdminTrueAndDeletedFalse();
 
     Demand save(Demand demand);
 

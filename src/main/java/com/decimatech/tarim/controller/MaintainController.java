@@ -20,7 +20,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -106,6 +105,10 @@ public class MaintainController {
         model.addAttribute("vendors", vendors);
 
         if (isAdmin) {
+            if (demand.isUnreadAdmin()){
+                demand.setUnreadAdmin(false);
+                demandService.updateDemand(demand);
+            }
             if (Objects.equals(demand.getDemandState(), "IN_PROGRESS")) {
                 model.addAttribute("message", "Şu anda servis aşamasındadır. Bayi servisi tamamlandığında tarafınıza iletilecektir.");
                 return "maintainStaticForm";
@@ -120,6 +123,10 @@ public class MaintainController {
                 return "maintainStaticForm";
             }
         } else {
+            if(demand.isUnreadVendor()){
+                demand.setUnreadVendor(false);
+                demandService.updateDemand(demand);
+            }
             if (Objects.equals(demand.getDemandState(), "IN_PROGRESS")) {
                 model.addAttribute("message", "Raporu düzenleyip merkeze yollayabilirsiniz.");
                 return "maintainUpdateForm";
@@ -145,7 +152,6 @@ public class MaintainController {
         Demand demand = demandService.findOne(maintain1.getDemandId());
         City demandCity = cityService.getCityById(demand.getCustomerCity());
         District demandDistrict = districtService.getDistrictById(demand.getCustomerDistrict());
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<Machine> machines = machineRepository.findAll();
 
         List<Vendor> vendors = utilityService.getUserVendor(authentication);
@@ -216,7 +222,7 @@ public class MaintainController {
 
         Maintain maintain1 = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain1.getDemandId());
-        demand.setDemandState("REJECTED");
+        demand.setRejected();
         demandService.updateDemand(demand);
 
         return "redirect:/maintains/details/" + id;
@@ -228,7 +234,7 @@ public class MaintainController {
 
         Maintain maintain1 = maintainService.findOne(id);
         Demand demand = demandService.findOne(maintain1.getDemandId());
-        demand.setDemandState("APPROVED");
+        demand.setApproved();
         demandService.updateDemand(demand);
 
         return "redirect:/maintains/details/" + id;

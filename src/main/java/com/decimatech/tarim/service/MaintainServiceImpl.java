@@ -1,6 +1,5 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.domain.DemandTable;
 import com.decimatech.tarim.model.domain.MaintainTable;
 import com.decimatech.tarim.model.entity.*;
 import com.decimatech.tarim.repository.DemandRepository;
@@ -12,10 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service("maintainService")
 @Transactional
@@ -70,6 +66,7 @@ public class MaintainServiceImpl implements MaintainService {
 
     @Override
     public Maintain updateMaintain(Maintain maintain) {
+        maintain.setUpdateDate(new Date());
         return maintainRepository.save(maintain);
     }
 
@@ -93,12 +90,12 @@ public class MaintainServiceImpl implements MaintainService {
 
         List<MaintainTable> maintainTables = new ArrayList<>();
 
-        for(Maintain maintain: maintains){
+        for (Maintain maintain : maintains) {
 
             MaintainTable maintainTableRow = new MaintainTable();
-            for (Demand demand : demands){
+            for (Demand demand : demands) {
 
-                if (Objects.equals(demand.getMaintainId(), maintain.getMaintainId())){
+                if (Objects.equals(demand.getMaintainId(), maintain.getMaintainId())) {
                     maintainTableRow.setMaintainId(maintain.getMaintainId());
                     maintainTableRow.setDemandId(maintain.getDemandId());
                     maintainTableRow.setDemandState(demand.getDemandState());
@@ -121,5 +118,10 @@ public class MaintainServiceImpl implements MaintainService {
         }
 
         return maintainTables;
+    }
+
+    @Override
+    public Maintain getMaintainByDemandId(Long id) {
+        return maintainRepository.findByDemandId(id);
     }
 }

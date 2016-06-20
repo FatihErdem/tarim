@@ -1,6 +1,5 @@
 package com.decimatech.tarim.model.entity;
 
-import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -59,8 +58,11 @@ public class Demand extends AbstractBaseModel {
     @Column(name = "demand_owner")
     private String demandOwner;
 
-    @Column(name = "unread")
-    private boolean unread = true;
+    @Column(name = "unread_by_vendor")
+    private boolean unreadVendor;
+
+    @Column(name = "unread_by_admin")
+    private boolean unreadAdmin;
 
     public enum State {
         OPEN("Açık"),
@@ -97,16 +99,44 @@ public class Demand extends AbstractBaseModel {
         }
     }
 
+    public boolean isUnreadVendor() {
+        return unreadVendor;
+    }
+
+    public void setUnreadVendor(boolean unreadVendor) {
+        this.unreadVendor = unreadVendor;
+    }
+
+    public boolean isUnreadAdmin() {
+        return unreadAdmin;
+    }
+
+    public void setUnreadAdmin(boolean unreadAdmin) {
+        this.unreadAdmin = unreadAdmin;
+    }
+
     public void setInProgress() {
         this.setDemandState("IN_PROGRESS");
+        this.setUnreadAdmin(true);
     }
 
     public void setCompleted() {
         this.setDemandState("COMPLETED");
+        this.setUnreadAdmin(true);
     }
 
-    public void setRead() {
-        this.setUnread(false);
+    public void setOpen(){
+        this.setDemandState("OPEN");
+    }
+
+    public void setRejected(){
+        this.setDemandState("REJECTED");
+        this.setUnreadVendor(true);
+    }
+
+    public void setApproved(){
+        this.setDemandState("APPROVED");
+        this.setUnreadVendor(true);
     }
 
     public Long getMaintainId() {
@@ -213,36 +243,4 @@ public class Demand extends AbstractBaseModel {
         this.demandOwner = demandOwner;
     }
 
-    public boolean isUnread() {
-        return unread;
-    }
-
-    public void setUnread(boolean unread) {
-        this.unread = unread;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Demand demand = (Demand) o;
-        return unread == demand.unread &&
-                Objects.equal(demandId, demand.demandId) &&
-                Objects.equal(vendorId, demand.vendorId) &&
-                Objects.equal(customerName, demand.customerName) &&
-                Objects.equal(customerSurname, demand.customerSurname) &&
-                Objects.equal(customerTel, demand.customerTel) &&
-                Objects.equal(customerAddress, demand.customerAddress) &&
-                Objects.equal(customerCity, demand.customerCity) &&
-                Objects.equal(customerDistrict, demand.customerDistrict) &&
-                Objects.equal(demandNote, demand.demandNote) &&
-                Objects.equal(demandState, demand.demandState) &&
-                Objects.equal(demandType, demand.demandType) &&
-                Objects.equal(demandOwner, demand.demandOwner);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(demandId, vendorId, customerName, customerSurname, customerTel, customerAddress, customerCity, customerDistrict, demandNote, demandState, demandType, demandOwner, unread);
-    }
 }

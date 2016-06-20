@@ -2,23 +2,31 @@ package com.decimatech.tarim.model.domain;
 
 public class NotificationDetail {
 
-    private Integer demandId;
-    private String createdAt;
+    private Long demandOrMaintainId;
+    private String state;
+    private String date;
 
-
-    public Integer getDemandId() {
-        return demandId;
+    public Long getDemandOrMaintainId() {
+        return demandOrMaintainId;
     }
 
-    public void setDemandId(Integer demandId) {
-        this.demandId = demandId;
+    public void setDemandOrMaintainId(Long demandOrMaintainId) {
+        this.demandOrMaintainId = demandOrMaintainId;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getState() {
+        return state;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

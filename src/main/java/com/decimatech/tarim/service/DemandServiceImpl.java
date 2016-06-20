@@ -11,10 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service("demandService")
 @Transactional
@@ -52,15 +49,16 @@ public class DemandServiceImpl implements DemandService {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
         if (isAdmin) {
-            return demandRepository.findAll();
+            return demandRepository.findByUnreadAdminTrueAndDeletedFalse();
         } else {
             Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
-            return demandRepository.findByVendorIdAndDeletedFalseAndUnreadTrue(vendor.getVendorId());
+            return demandRepository.findByVendorIdAndDeletedFalseAndUnreadVendorTrue(vendor.getVendorId());
         }
     }
 
     @Override
     public Demand updateDemand(Demand demand) {
+        demand.setUpdateDate(new Date());
         return demandRepository.save(demand);
     }
 
@@ -100,11 +98,5 @@ public class DemandServiceImpl implements DemandService {
     @Override
     public Demand findOne(Long id) {
         return demandRepository.findOne(id);
-    }
-
-    @Override
-    public void setDemandRead(Demand demand) {
-        demand.setRead();
-        demandRepository.save(demand);
     }
 }

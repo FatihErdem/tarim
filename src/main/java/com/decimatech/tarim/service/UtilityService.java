@@ -11,4 +11,5 @@ public interface UtilityService {
 
     void expireSessionWithUserId(Long id);
 
+    boolean isVendor(Authentication authentication);
 }

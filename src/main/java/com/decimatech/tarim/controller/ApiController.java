@@ -5,17 +5,16 @@ import com.decimatech.tarim.model.domain.NotificationDetail;
 import com.decimatech.tarim.model.entity.City;
 import com.decimatech.tarim.model.entity.Demand;
 import com.decimatech.tarim.model.entity.District;
-import com.decimatech.tarim.service.CityService;
-import com.decimatech.tarim.service.DemandService;
-import com.decimatech.tarim.service.DistrictService;
+import com.decimatech.tarim.model.entity.Maintain;
+import com.decimatech.tarim.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -30,26 +29,43 @@ public class ApiController {
     @Autowired
     private DemandService demandService;
 
+    @Autowired
+    private UtilityService utilityService;
+
+    @Autowired
+    private MaintainService maintainService;
+
     @ResponseBody
     @RequestMapping(value = "/notifications", method = RequestMethod.GET, headers = "Accept=application/json")
     public Notification getNotification(Authentication authentication) {
 
-        Notification notification = new Notification();
+        //TODO gelen talep turune gore ve demandStateine gore notification olustur
+
         List<Demand> demands = demandService.gellAllUnreadDemands(authentication);
 
-        List<NotificationDetail> notificationDetails = new ArrayList<>();
+        List<NotificationDetail> notifications = new ArrayList<>();
 
-        for (int i = 0; i < demands.size(); i++) {
+        Notification notification = new Notification();
+        for (Demand demand : demands) {
             NotificationDetail notificationDetail = new NotificationDetail();
+            if (Objects.equals(demand.getDemandState(), "OPEN")) {
+                String date = new SimpleDateFormat("dd/MM HH:mm").format(demand.getCreationDate().getTime());
+                notificationDetail.setDate(date);
+                notificationDetail.setDemandOrMaintainId(demand.getDemandId());
+                notificationDetail.setState(demand.getDemandState());
+            }else{
+                String date = new SimpleDateFormat("dd/MM HH:mm").format(demand.getUpdateDate().getTime());
+                notificationDetail.setDate(date);
+                Maintain maintain = maintainService.getMaintainByDemandId(demand.getDemandId());
+                notificationDetail.setDemandOrMaintainId(maintain.getMaintainId());
+                notificationDetail.setState(demand.getDemandState());
+            }
 
-
-            notificationDetail.setDemandId(Math.toIntExact(demands.get(i).getDemandId()));
-            notificationDetail.setCreatedAt(new SimpleDateFormat("dd/MM HH:mm").format(new Date(demands.get(i).getCreationDate().getTime())));
-            notificationDetails.add(notificationDetail);
+            notifications.add(notificationDetail);
         }
 
-        notification.setDetails(notificationDetails);
-        notification.setUnreadCount(demands.size());
+        notification.setDetails(notifications);
+        notification.setUnreadCount(notifications.size());
 
         return notification;
 
@@ -63,7 +79,7 @@ public class ApiController {
 
     @ResponseBody
     @RequestMapping(value = "/districts/{cityId}", method = RequestMethod.GET, headers = "Accept=application/json")
-    public List<District> getDistricts(@PathVariable("cityId") Long cityId){
+    public List<District> getDistricts(@PathVariable("cityId") Long cityId) {
 
         return districtService.getDistrictsByCityId(cityId);
     }

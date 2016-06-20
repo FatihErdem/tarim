@@ -9,20 +9,44 @@ $(document).ready(function () {
                 document.getElementById('notificationMenu').innerHTML = '';
                 document.getElementById("notificationCount").innerHTML = data.unreadCount;
                 document.getElementById("notificationCount2").innerHTML = data.unreadCount;
-                document.getElementById("notificationCount3").innerHTML = data.unreadCount;
 
                 for (var counter = 0; counter < data.details.length; counter++) {
+                    var demandOrMaintainId = data.details[counter].demandOrMaintainId;
+                    var state = data.details[counter].state;
+                    var date = data.details[counter].date;
                     var div = document.createElement('div');
-                    var link = data.details[counter].demandId;
-                    var url = "/demands/details/" + link;
+                    var url;
+                    var span;
+
+                    switch (state){
+                        case "OPEN":
+                            url = "/demands/details/" + demandOrMaintainId;
+                            span = "<span class=\"label label-sm label-default\">" + "#" + demandOrMaintainId + "</b> no\'lu talep geldi" + "</span><b>";
+                            break;
+                        case "IN_PROGRESS":
+                            url = "/maintains/details/" + demandOrMaintainId;
+                            span = "<span class=\"label label-sm label-warning\">" + "#" + demandOrMaintainId + "</b> no\'lu servis başladı" + "</span><b>";
+                            break;
+                        case "COMPLETED":
+                            url = "/maintains/details/" + demandOrMaintainId;
+                            span = "<span class=\"label label-sm label-primary\">" + "#" + demandOrMaintainId + "</b> no\'lu servis tamamlandı" + "</span><b>";
+                            break;
+                        case "REJECTED":
+                            url = "/maintains/details/" + demandOrMaintainId;
+                            span = "<span class=\"label label-sm label-danger\">" + "#" + demandOrMaintainId + "</b> no\'lu rapor reddedildi" + "</span><b>";
+                            break;
+                        case "APPROVED":
+                            url = "/maintains/details/" + demandOrMaintainId;
+                            span = "<span class=\"label label-sm label-success\">" + "#" + demandOrMaintainId + "</b> no\'lu rapor onaylandı" + "</span><b>";
+                    }
+                    
                     var uniqueNotification =
                         "<li>" +
                         "<a href=" + url + ">" +
-                        "<span class=\"time\">" + data.details[counter].createdAt + "</span>" +
+                        "<span class=\"time\">" + date + "</span>" +
                         "<span class=\"details\">" +
-                        "<span class=\"label label-sm label-icon label-success\">" +
-                        "<i class=\"fa fa-plus\"></i>" +
-                        "</span><b>" + "#" + data.details[counter].demandId + "</b> no\'lu talep geldi" + "</span>" +
+                         span +
+                        "</span>" +
                         "</a>" +
                         "</li>";
                     div.innerHTML = uniqueNotification;
@@ -32,7 +56,7 @@ $(document).ready(function () {
                 }
             },
             complete : function () {
-                setTimeout(request, 15000)
+                setTimeout(request, 1500000)
             }
 
         });
