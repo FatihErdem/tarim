@@ -85,4 +85,10 @@ public class UtilityServiceImpl implements UtilityService {
         return authorities.contains(new SimpleGrantedAuthority("VENDOR"));
     }
 
+    @Override
+    public boolean isAdmin(Authentication authentication) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        return authorities.contains(new SimpleGrantedAuthority("ADMIN"));
+    }
+
 }

@@ -1,6 +1,61 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content">
     <div class="page-content-wrapper">
         <div class="page-content">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <a class="dashboard-stat dashboard-stat-v2 blue" th:href="@{/maintains}">
+                        <div class="visual">
+                            <i class="fa fa-globe"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number">
+                                <span th:text="${totalDemandCount}">1349</span>
+                            </div>i
+                            <div class="desc"> Toplam Servis</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <a class="dashboard-stat dashboard-stat-v2 yellow" th:href="@{/maintains}">
+                        <div class="visual">
+                            <i class="fa fa-wrench"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number">
+                                <span th:text="${totalInProgressDemandCount}">12,5</span>
+                            </div>
+                            <div class="desc"> Aktif Servisler</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                        <div class="visual">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number">
+                                <span th:text="${totalApprovedDemandCount}">549</span>
+                            </div>
+                            <div class="desc"> Onaylanan Raporlar</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                        <div class="visual">
+                            <i class="fa fa-try"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number">
+                                <span>12.500 TL</span>
+                            </div>
+                            <div class="desc"> Cari Hesap</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </th:block>

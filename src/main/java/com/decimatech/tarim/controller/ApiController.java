@@ -39,8 +39,6 @@ public class ApiController {
     @RequestMapping(value = "/notifications", method = RequestMethod.GET, headers = "Accept=application/json")
     public Notification getNotification(Authentication authentication) {
 
-        //TODO gelen talep turune gore ve demandStateine gore notification olustur
-
         List<Demand> demands = demandService.gellAllUnreadDemands(authentication);
 
         List<NotificationDetail> notifications = new ArrayList<>();

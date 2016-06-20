@@ -1,7 +1,7 @@
 package com.decimatech.tarim.service;
 
-import com.decimatech.tarim.model.entity.Demand;
 import com.decimatech.tarim.model.domain.DemandTable;
+import com.decimatech.tarim.model.entity.Demand;
 import com.decimatech.tarim.model.entity.Vendor;
 import com.decimatech.tarim.repository.DemandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,4 +99,46 @@ public class DemandServiceImpl implements DemandService {
     public Demand findOne(Long id) {
         return demandRepository.findOne(id);
     }
+
+    @Override
+    public Long getDemandCount(Authentication authentication) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
+
+        if (isAdmin) {
+            return demandRepository.count();
+        } else {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            return demandRepository.countByVendorId(vendor.getVendorId());
+        }
+    }
+
+    @Override
+    public Long getInProgresDemandCount(Authentication authentication) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
+
+        if(isAdmin){
+            return demandRepository.countByDemandState("IN_PROGRESS");
+        }
+        else {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            return demandRepository.countByDemandStateAndVendorId("IN_PROGRESS", vendor.getVendorId());
+        }
+    }
+
+    @Override
+    public Long getApprovedDemandCount(Authentication authentication) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
+
+        if(isAdmin){
+            return demandRepository.countByDemandState("APPROVED");
+        }
+        else {
+            Vendor vendor = vendorService.getVendorByUsername(authentication.getName());
+            return demandRepository.countByDemandStateAndVendorId("APPROVED", vendor.getVendorId());
+        }
+    }
+
 }

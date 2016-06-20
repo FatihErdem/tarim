@@ -22,4 +22,12 @@ public interface DemandRepository extends Repository<Demand, Long> {
     Demand findOne(Long id);
 
     void flush();
+
+    Long count();
+
+    Long countByVendorId(Long id);
+
+    Long countByDemandState(String demandState);
+
+    Long countByDemandStateAndVendorId(String demandState, Long vendorId);
 }

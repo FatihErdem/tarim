@@ -56,7 +56,7 @@ $(document).ready(function () {
                 }
             },
             complete : function () {
-                setTimeout(request, 1500000)
+                setTimeout(request, 15000)
             }
 
         });

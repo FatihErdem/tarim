@@ -18,4 +18,10 @@ public interface DemandService {
 
     Demand findOne(Long id);
 
+    Long getDemandCount(Authentication authentication);
+
+    Long getInProgresDemandCount(Authentication authentication);
+
+    Long getApprovedDemandCount(Authentication authentication);
+
 }
