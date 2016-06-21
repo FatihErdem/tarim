@@ -30,10 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /* @formatter:off */
+        // @formatter:off
         http.authorizeRequests()
-
-                // authentication
                 .antMatchers("/assets/**", "/images/**", "/mobile/**").permitAll()
                 .antMatchers("/admins/**").hasAuthority("ADMIN")
                 .antMatchers("/vendors/**").hasAuthority("ADMIN")
@@ -41,18 +39,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/parts/**").hasAuthority("ADMIN")
                 .anyRequest().fullyAuthenticated()
                 .and()
-                .formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
+                    .csrf().ignoringAntMatchers("/mobile/**")
                 .and()
-                .logout().deleteCookies("remember-me").invalidateHttpSession(true).clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
+                    .formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
                 .and()
-                .rememberMe()
+                    .logout().deleteCookies("remember-me").invalidateHttpSession(true).clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
                 .and()
-                .sessionManagement()
-                .maximumSessions(10).expiredUrl("/login?expire")
-                .sessionRegistry(sessionRegistry());
+                    .rememberMe()
+                .and()
+                    .sessionManagement()
+                    .maximumSessions(10).expiredUrl("/login?expire")
+                    .sessionRegistry(sessionRegistry());
 
-        /* @formatter:on */
+        // @formatter:on
     }
 
     @Autowired

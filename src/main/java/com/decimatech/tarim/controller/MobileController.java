@@ -1,17 +1,14 @@
 package com.decimatech.tarim.controller;
 
+import com.decimatech.tarim.model.domain.ResultFromMobile;
 import com.decimatech.tarim.model.dto.DemandJsonDto;
 import com.decimatech.tarim.model.entity.Demand;
+import com.decimatech.tarim.model.entity.Maintain;
 import com.decimatech.tarim.model.entity.Vendor;
-import com.decimatech.tarim.service.CityService;
-import com.decimatech.tarim.service.DemandService;
-import com.decimatech.tarim.service.DistrictService;
-import com.decimatech.tarim.service.VendorService;
+import com.decimatech.tarim.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,8 +30,13 @@ public class MobileController {
     @Autowired
     private DistrictService districtService;
 
-    @RequestMapping(value = "/getdemands/{vendorname}")
+    @Autowired
+    private MaintainService maintainService;
 
+    @Autowired
+    private ImageService imageService;
+
+    @RequestMapping(value = "/getdemands/{vendorname}", method = RequestMethod.GET)
     public List<DemandJsonDto> demandList(@PathVariable("vendorname") String vendorName) throws IOException {
 
         Vendor vendor = vendorService.getVendorByUsername(vendorName);
@@ -53,5 +55,22 @@ public class MobileController {
 
         return demandJsonDtoList;
 
+    }
+
+    @RequestMapping(value = "/maintainresult", method = RequestMethod.POST)
+    public void postMaintain(@RequestBody ResultFromMobile resultFromMobile) {
+
+        System.out.printf(resultFromMobile.toString());
+
+        Maintain maintain = maintainService.findOne(resultFromMobile.getMaintainId());
+        List<String> urls = resultFromMobile.getUrls();
+        for (String url: urls){
+            imageService.saveImagesForMaintain(maintain.getMaintainId(), url);
+        }
+
+        maintain.setStartTime(resultFromMobile.getStartTime());
+        maintain.setFinishTime(resultFromMobile.getFinishTime());
+        maintain.setTotalDistance(resultFromMobile.getTotalDistance());
+        maintainService.updateMaintain(maintain);
     }
 }
