@@ -16,6 +16,9 @@ public class Image {
     @Column(name = "image_url")
     private String imageUrl;
 
+    public Image() {
+    }
+
     public Image(Long maintainId, String imageUrl) {
         this.maintainId = maintainId;
         this.imageUrl = imageUrl;

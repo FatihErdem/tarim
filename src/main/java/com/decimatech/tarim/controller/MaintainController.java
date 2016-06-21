@@ -60,6 +60,9 @@ public class MaintainController {
     @Autowired
     private UtilityService utilityService;
 
+    @Autowired
+    private ImageService imageService;
+
     @InitBinder("form")
     protected void initBinder(final WebDataBinder binder) {
         binder.setValidator(this.formValidator);
@@ -97,12 +100,15 @@ public class MaintainController {
             replacedPartList.add(replacedPart);
         }
 
+        List<Image> images = imageService.getByMaintainId(id);
+
         MaintainFormDto formDto = new MaintainFormDto(maintain, demand, replacedPartList);
         model.addAttribute("form", formDto);
         model.addAttribute("machines", machines);
         model.addAttribute("city", demandCity);
         model.addAttribute("district", demandDistrict);
         model.addAttribute("vendors", vendors);
+        model.addAttribute("images", images);
 
         if (isAdmin) {
             if (demand.isUnreadAdmin()){

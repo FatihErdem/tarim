@@ -13,3 +13,10 @@
     max-width: 400px;
     width: 400px;
 }
+
+a.fancybox {
+    display: inline-block;
+    width: 225px;
+    height: 150px;
+    background-size: cover;
+}

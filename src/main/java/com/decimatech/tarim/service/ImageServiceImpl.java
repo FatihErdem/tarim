@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ImageServiceImpl implements ImageService {
@@ -18,5 +20,10 @@ public class ImageServiceImpl implements ImageService {
     public void saveImagesForMaintain(Long maintainId, String imageUrl) {
         Image image = new Image(maintainId, imageUrl);
         imageRepository.save(image);
+    }
+
+    @Override
+    public List<Image> getByMaintainId(Long maintainId) {
+        return imageRepository.findByMaintainId(maintainId);
     }
 }

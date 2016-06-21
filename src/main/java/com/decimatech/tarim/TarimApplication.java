@@ -71,9 +71,8 @@ public class TarimApplication {
         return (container -> {
             ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/errors/403.html");
             ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/errors/404.html");
-            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/errors/500.html");
 
-            container.addErrorPages(error403Page, error404Page, error500Page);
+            container.addErrorPages(error403Page, error404Page);
         });
     }
 

@@ -437,6 +437,16 @@
                                 </div>
                             </div>
 
+                            <h3 class="form-section">Çekilen Fotoğraflar</h3>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <a th:each="image : ${images}" th:href="${image.imageUrl}" class="fancybox" style="margin-left: 20px" rel="gallery1"></a>
+                                    </p>
+                                </div>
+                            </div>
+
                             <div class="form-actions">
                                 <a th:href="@{/maintains}" type="button" class="btn red">
                                     <i class="fa fa-times"></i> İPTAL ET
@@ -479,7 +489,11 @@
                                 </div>
                             </div>
                         </div>
+
+
                     </form>
+
+
                     <div class="row" style="margin-top: 20px">
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
