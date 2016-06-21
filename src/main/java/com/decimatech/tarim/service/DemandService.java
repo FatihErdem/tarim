@@ -24,4 +24,6 @@ public interface DemandService {
 
     Long getApprovedDemandCount(Authentication authentication);
 
+    List<Demand> getInProgressDemandsByVendorId(Long vendorId, String demandState);
+
 }

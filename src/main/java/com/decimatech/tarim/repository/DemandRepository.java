@@ -30,4 +30,6 @@ public interface DemandRepository extends Repository<Demand, Long> {
     Long countByDemandState(String demandState);
 
     Long countByDemandStateAndVendorId(String demandState, Long vendorId);
+
+    List<Demand> findByVendorIdAndDemandState(Long vendorId, String demandState);
 }

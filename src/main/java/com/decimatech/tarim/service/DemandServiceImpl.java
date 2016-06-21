@@ -141,4 +141,10 @@ public class DemandServiceImpl implements DemandService {
         }
     }
 
+    @Override
+    public List<Demand> getInProgressDemandsByVendorId(Long vendorId, String demandState) {
+        return demandRepository.findByVendorIdAndDemandState(vendorId, demandState);
+    }
+
+
 }
