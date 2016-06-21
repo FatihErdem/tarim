@@ -3,7 +3,13 @@
 }
 
 .label.label-md {
-    min-width: 225px ;
+    min-width: 225px;
     min-height: 22px;
     display: inline-block;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-extended .dropdown-menu {
+    min-width: 160px;
+    max-width: 400px;
+    width: 400px;
 }
