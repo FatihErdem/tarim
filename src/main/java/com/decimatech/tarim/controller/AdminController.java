@@ -2,9 +2,7 @@ package com.decimatech.tarim.controller;
 
 import com.decimatech.tarim.model.entity.Admin;
 import com.decimatech.tarim.service.AdminService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,7 +52,7 @@ public class AdminController {
     @RequestMapping(value = "/details/{id}", method = RequestMethod.POST)
     public String updateAdmin(@Valid @ModelAttribute Admin admin, BindingResult result, @PathVariable("id") Long id) {
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
 
             System.out.printf("HATAAAAAAAAAAAAAAA");
             return "redirect:/admins";

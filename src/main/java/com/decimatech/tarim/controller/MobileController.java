@@ -1,5 +1,6 @@
 package com.decimatech.tarim.controller;
 
+import com.decimatech.tarim.model.domain.MaintainsToMobile;
 import com.decimatech.tarim.model.domain.ResultFromMobile;
 import com.decimatech.tarim.model.dto.DemandJsonDto;
 import com.decimatech.tarim.model.entity.Demand;
@@ -37,7 +38,7 @@ public class MobileController {
     private ImageService imageService;
 
     @RequestMapping(value = "/getdemands/{vendorname}", method = RequestMethod.GET)
-    public List<DemandJsonDto> demandList(@PathVariable("vendorname") String vendorName) throws IOException {
+    public MaintainsToMobile demandList(@PathVariable("vendorname") String vendorName) throws IOException {
 
         Vendor vendor = vendorService.getVendorByUsername(vendorName);
 
@@ -53,7 +54,9 @@ public class MobileController {
             demandJsonDtoList.add(demandJsonDto);
         }
 
-        return demandJsonDtoList;
+        MaintainsToMobile maintainsToMobile = new MaintainsToMobile();
+        maintainsToMobile.setMaintains(demandJsonDtoList);
+        return maintainsToMobile;
 
     }
 
